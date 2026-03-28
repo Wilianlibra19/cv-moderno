@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Andy Ramos — Desarrollador Full Stack</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg: #080c10; --bg2: #0d1117; --surface: #131920;
+      --border: rgba(255,255,255,0.07);
+      --accent: #00d4ff; --accent2: #0066ff; --accent3: #00ffaa;
+      --text: #e2eaf4; --muted: #5a7080;
+      --font-display: 'Syne', sans-serif; --font-body: 'DM Sans', sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: var(--font-body); font-size: 16px; line-height: 1.6; overflow-x: hidden; }
+    body::before {
+      content: ''; position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 9999; opacity: 0.35;
+    }
+    body::after {
+      content: ''; position: fixed; inset: 0;
+      background-image: linear-gradient(rgba(0,212,255,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(0,212,255,0.025) 1px, transparent 1px);
+      background-size: 60px 60px; pointer-events: none; z-index: 0;
+    }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.1rem 5vw;
+      background: rgba(8,12,16,0.88); backdrop-filter: blur(24px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo { font-family: var(--font-display); font-weight: 800; font-size: 1.05rem; letter-spacing: -0.02em; color: var(--text); text-decoration: none; }
+    .nav-logo .dot { color: var(--accent); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.82rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--accent); }
+    .nav-cta { background: transparent; border: 1px solid var(--accent); color: var(--accent); padding: 0.45rem 1.2rem; border-radius: 6px; font-size: 0.82rem; font-weight: 600; text-decoration: none; letter-spacing: 0.04em; transition: background 0.2s, color 0.2s; }
+    .nav-cta:hover { background: var(--accent); color: var(--bg); }
+
+    #inicio { min-height: 100vh; display: flex; align-items: center; padding: 8rem 5vw 4rem; position: relative; overflow: hidden; }
+    .hero-glow { position: absolute; width: 700px; height: 700px; border-radius: 50%; background: radial-gradient(circle, rgba(0,102,255,0.12) 0%, transparent 65%); top: -150px; right: -150px; pointer-events: none; }
+    .hero-glow2 { position: absolute; width: 500px; height: 500px; border-radius: 50%; background: radial-gradient(circle, rgba(0,212,255,0.07) 0%, transparent 65%); bottom: -100px; left: 5%; pointer-events: none; }
+    .hero-inner { max-width: 960px; position: relative; z-index: 1; }
+    .hero-tag { display: inline-flex; align-items: center; gap: 0.6rem; background: rgba(0,212,255,0.08); border: 1px solid rgba(0,212,255,0.2); color: var(--accent); border-radius: 6px; padding: 0.35rem 1rem; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 2rem; animation: fadeUp 0.6s ease both; }
+    .hero-tag .blink { width: 6px; height: 6px; border-radius: 50%; background: var(--accent3); animation: blink 1.4s infinite; display: inline-block; }
+    @keyframes blink { 0%,100%{opacity:1}50%{opacity:0.2} }
+    h1 { font-family: var(--font-display); font-size: clamp(2.8rem, 7.5vw, 5.5rem); font-weight: 800; line-height: 1.0; letter-spacing: -0.04em; animation: fadeUp 0.7s ease 0.1s both; }
+    h1 .name { color: var(--accent); display: block; }
+    h1 .role { display: block; font-size: 0.45em; color: transparent; -webkit-text-stroke: 1px rgba(0,212,255,0.3); letter-spacing: -0.01em; margin-top: 0.2em; }
+    .hero-desc { margin-top: 1.8rem; font-size: 1.05rem; color: var(--muted); max-width: 560px; font-weight: 300; line-height: 1.8; animation: fadeUp 0.7s ease 0.2s both; }
+    .hero-actions { display: flex; gap: 1rem; margin-top: 2.5rem; flex-wrap: wrap; animation: fadeUp 0.7s ease 0.3s both; }
+    .btn-primary { background: var(--accent); color: var(--bg); padding: 0.85rem 2rem; border-radius: 6px; font-weight: 700; text-decoration: none; font-size: 0.9rem; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 0 25px rgba(0,212,255,0.25); }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 4px 35px rgba(0,212,255,0.4); }
+    .btn-ghost { background: transparent; color: var(--text); padding: 0.85rem 2rem; border-radius: 6px; font-weight: 500; text-decoration: none; font-size: 0.9rem; border: 1px solid var(--border); transition: border-color 0.2s, color 0.2s; }
+    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+    .hero-stats { display: flex; margin-top: 4rem; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; width: fit-content; animation: fadeUp 0.7s ease 0.4s both; }
+    .stat { padding: 1.2rem 2rem; border-right: 1px solid var(--border); }
+    .stat:last-child { border-right: none; }
+    .stat-num { font-family: var(--font-display); font-size: 2rem; font-weight: 800; color: var(--accent); line-height: 1; }
+    .stat-lbl { font-size: 0.72rem; color: var(--muted); margin-top: 0.25rem; letter-spacing: 0.04em; }
+    .hero-contact-bar { display: flex; gap: 2rem; margin-top: 2rem; flex-wrap: wrap; animation: fadeUp 0.7s ease 0.5s both; }
+    .contact-item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.82rem; color: var(--muted); }
+    .contact-item span { color: var(--accent); }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)} }
+
+    section { padding: 7rem 5vw; position: relative; z-index: 1; }
+    .section-label { display: inline-block; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.5rem; }
+    .section-title { font-family: var(--font-display); font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1.15; margin-bottom: 0.8rem; }
+    .section-title em { color: var(--accent); font-style: normal; }
+    .section-line { width: 48px; height: 2px; background: linear-gradient(90deg, var(--accent), var(--accent2)); margin-bottom: 3rem; }
+
+    #sobre-mi { background: var(--bg2); }
+    .about-grid { display: grid; grid-template-columns: 300px 1fr; gap: 4rem; align-items: start; }
+    .about-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; position: sticky; top: 100px; }
+    .about-card-top { height: 180px; background: linear-gradient(135deg, #0a1a2e, #001433); display: flex; align-items: center; justify-content: center; position: relative; }
+    .about-card-top::after { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 60% 40%, rgba(0,212,255,0.12), transparent 60%); }
+    .avatar-placeholder { width: 80px; height: 80px; border-radius: 50%; background: rgba(0,212,255,0.1); border: 2px solid rgba(0,212,255,0.3); display: flex; align-items: center; justify-content: center; font-size: 2.2rem; position: relative; z-index: 1; }
+    .about-card-body { padding: 1.4rem; }
+    .about-name { font-family: var(--font-display); font-weight: 700; font-size: 1rem; margin-bottom: 0.25rem; }
+    .about-role { color: var(--accent); font-size: 0.82rem; font-weight: 500; margin-bottom: 1rem; }
+    .about-info-row { display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; color: var(--muted); margin-bottom: 0.45rem; }
+    .about-info-row .ico { color: var(--accent); }
+    .about-separator { border: none; border-top: 1px solid var(--border); margin: 1rem 0; }
+    .about-badge-row { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .badge { background: rgba(0,212,255,0.08); border: 1px solid rgba(0,212,255,0.18); color: var(--accent); padding: 0.22rem 0.65rem; border-radius: 4px; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.04em; }
+    .about-text h3 { font-family: var(--font-display); font-weight: 700; font-size: 1rem; margin: 2rem 0 0.7rem; color: var(--text); }
+    .about-text h3:first-child { margin-top: 0; }
+    .about-text p { color: var(--muted); margin-bottom: 1rem; font-weight: 300; line-height: 1.8; font-size: 0.92rem; }
+    .skills-category { margin-bottom: 1.4rem; }
+    .skills-cat-title { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 0.5rem; }
+    .skills-row { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+    .skill-tag { background: var(--surface); border: 1px solid var(--border); color: var(--text); padding: 0.3rem 0.75rem; border-radius: 6px; font-size: 0.78rem; font-weight: 500; transition: border-color 0.2s, color 0.2s; cursor: default; }
+    .skill-tag:hover { border-color: var(--accent); color: var(--accent); }
+
+    #experiencia { background: var(--bg); }
+    .timeline { margin-top: 1rem; position: relative; }
+    .timeline::before { content: ''; position: absolute; left: 12px; top: 10px; bottom: 10px; width: 1px; background: linear-gradient(to bottom, var(--accent), transparent); }
+    .timeline-item { display: flex; gap: 2.5rem; margin-bottom: 2.5rem; position: relative; }
+    .tl-dot { width: 26px; height: 26px; border-radius: 50%; flex-shrink: 0; background: var(--bg); border: 2px solid var(--accent); position: relative; top: 6px; box-shadow: 0 0 14px rgba(0,212,255,0.5); }
+    .tl-dot::after { content: ''; position: absolute; inset: 4px; border-radius: 50%; background: var(--accent); }
+    .tl-content { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 1.8rem; flex: 1; transition: border-color 0.3s, box-shadow 0.3s; }
+    .tl-content:hover { border-color: rgba(0,212,255,0.25); box-shadow: 0 8px 30px rgba(0,0,0,0.3); }
+    .tl-meta { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.8rem; }
+    .tl-role { font-family: var(--font-display); font-weight: 700; font-size: 1.05rem; margin-bottom: 0.2rem; }
+    .tl-company { color: var(--accent); font-weight: 500; font-size: 0.85rem; }
+    .tl-date { background: rgba(0,212,255,0.08); border: 1px solid rgba(0,212,255,0.18); color: var(--accent); padding: 0.22rem 0.75rem; border-radius: 4px; font-size: 0.7rem; font-weight: 700; white-space: nowrap; letter-spacing: 0.06em; }
+    .tl-desc { color: var(--muted); font-size: 0.87rem; line-height: 1.7; }
+    .tl-desc ul { padding-left: 1.1rem; margin-top: 0.4rem; }
+    .tl-desc li { margin-bottom: 0.35rem; }
+    .tl-current { display: inline-block; margin-top: 0.8rem; background: rgba(0,255,170,0.1); border: 1px solid rgba(0,255,170,0.25); color: var(--accent3); padding: 0.18rem 0.65rem; border-radius: 4px; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+
+    .edu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.2rem; }
+    .edu-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.4rem; transition: border-color 0.3s; }
+    .edu-card:hover { border-color: rgba(0,212,255,0.22); }
+    .edu-year { font-size: 0.7rem; font-weight: 700; color: var(--accent); letter-spacing: 0.1em; margin-bottom: 0.35rem; }
+    .edu-title { font-family: var(--font-display); font-weight: 700; font-size: 0.92rem; margin-bottom: 0.3rem; }
+    .edu-inst { color: var(--muted); font-size: 0.82rem; }
+
+    #proyectos { background: var(--bg2); }
+    .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; }
+    .project-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s; display: flex; flex-direction: column; }
+    .project-card:hover { transform: translateY(-5px); border-color: rgba(0,212,255,0.25); box-shadow: 0 15px 40px rgba(0,0,0,0.4); }
+    .project-thumb { height: 150px; display: flex; align-items: center; justify-content: center; font-size: 2.8rem; position: relative; }
+    .t1 { background: linear-gradient(135deg, #080c18, #101840); }
+    .t2 { background: linear-gradient(135deg, #061218, #0a2030); }
+    .t3 { background: linear-gradient(135deg, #0c0818, #1a0d30); }
+    .t4 { background: linear-gradient(135deg, #080e18, #0d1e3a); }
+    .project-thumb::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 40%, var(--surface)); }
+    .project-body { padding: 1.3rem; flex: 1; display: flex; flex-direction: column; }
+    .project-tags { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 0.6rem; }
+    .ptag { font-size: 0.67rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; background: rgba(0,212,255,0.08); color: var(--accent); padding: 0.18rem 0.5rem; border-radius: 3px; }
+    .project-name { font-family: var(--font-display); font-weight: 700; font-size: 0.98rem; margin-bottom: 0.5rem; }
+    .project-desc { color: var(--muted); font-size: 0.83rem; line-height: 1.6; flex: 1; }
+
+    #servicios { background: var(--bg); }
+    .services-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
+    .service-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 2rem; transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s; position: relative; overflow: hidden; }
+    .service-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--accent), var(--accent2)); transform: scaleX(0); transform-origin: left; transition: transform 0.35s; }
+    .service-card:hover { transform: translateY(-4px); border-color: rgba(0,212,255,0.2); box-shadow: 0 12px 35px rgba(0,0,0,0.35); }
+    .service-card:hover::before { transform: scaleX(1); }
+    .service-icon { width: 48px; height: 48px; border-radius: 12px; background: rgba(0,212,255,0.08); border: 1px solid rgba(0,212,255,0.15); display: flex; align-items: center; justify-content: center; font-size: 1.3rem; margin-bottom: 1.2rem; }
+    .service-name { font-family: var(--font-display); font-weight: 700; font-size: 1rem; margin-bottom: 0.5rem; }
+    .service-desc { color: var(--muted); font-size: 0.84rem; line-height: 1.7; }
+
+    #contacto { background: var(--bg2); text-align: center; }
+    .contact-inner { max-width: 620px; margin: 0 auto; }
+    .contact-sub { color: var(--muted); margin-bottom: 3rem; font-size: 0.92rem; }
+    .contact-form { display: flex; flex-direction: column; gap: 1rem; text-align: left; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+    .form-group label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); }
+    .form-group input, .form-group textarea, .form-group select { background: var(--surface); border: 1px solid var(--border); color: var(--text); border-radius: 8px; padding: 0.78rem 0.9rem; font-family: var(--font-body); font-size: 0.9rem; outline: none; transition: border-color 0.2s, box-shadow 0.2s; resize: vertical; }
+    .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(0,212,255,0.1); }
+    .form-group select option { background: var(--surface); }
+    .form-submit { background: var(--accent); color: var(--bg); border: none; border-radius: 8px; padding: 1rem 2.5rem; font-family: var(--font-display); font-weight: 700; font-size: 0.95rem; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 0 25px rgba(0,212,255,0.25); width: 100%; letter-spacing: 0.03em; }
+    .form-submit:hover { transform: translateY(-2px); box-shadow: 0 4px 35px rgba(0,212,255,0.4); }
+    .contact-direct { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 2.5rem; }
+    .direct-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 1.1rem; display: flex; align-items: center; gap: 0.8rem; text-decoration: none; transition: border-color 0.2s; }
+    .direct-card:hover { border-color: var(--accent); }
+    .direct-ico { font-size: 1.25rem; }
+    .direct-lbl { font-size: 0.68rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+    .direct-val { color: var(--text); font-size: 0.82rem; font-weight: 500; margin-top: 0.1rem; }
+
+    footer { padding: 2rem 5vw; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; background: var(--bg); position: relative; z-index: 1; }
+    footer p { color: var(--muted); font-size: 0.8rem; }
+    footer a { color: var(--accent); text-decoration: none; }
+
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.65s ease, transform 0.65s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 860px) {
+      .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .about-card { position: static; }
+      .form-row { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .contact-direct { grid-template-columns: 1fr; }
+      .hero-stats { flex-wrap: wrap; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="#inicio" class="nav-logo">Andy<span class="dot">.</span>dev</a>
+  <ul class="nav-links">
+    <li><a href="#sobre-mi">Sobre mí</a></li>
+    <li><a href="#experiencia">Experiencia</a></li>
+    <li><a href="#proyectos">Proyectos</a></li>
+    <li><a href="#servicios">Servicios</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+  <a href="mailto:Wilianlibra2024@gmail.com" class="nav-cta">Contáctame</a>
+</nav>
+
+<section id="inicio">
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+  <div class="hero-inner">
+    <div class="hero-tag"><span class="blink"></span> Disponible para proyectos</div>
+    <h1>
+      Andy Wilian
+      <span class="name">Ramos Borda</span>
+      <span class="role">Full Stack Developer · ERP Integrator</span>
+    </h1>
+    <p class="hero-desc">
+      Bachiller en Ingeniería de Sistemas e Informática especializado en desarrollo web, 
+      APIs RESTful, integración SAP Business One y facturación electrónica SUNAT. 
+      Construyo soluciones tecnológicas que generan valor real.
+    </p>
+    <div class="hero-actions">
+      <a href="#proyectos" class="btn-primary">Ver mis proyectos →</a>
+      <a href="#contacto" class="btn-ghost">Hablemos</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num">3</div><div class="stat-lbl">Empresas</div></div>
+      <div class="stat"><div class="stat-num">2+</div><div class="stat-lbl">Años exp.</div></div>
+      <div class="stat"><div class="stat-num">SAP</div><div class="stat-lbl">B1 Integration</div></div>
+      <div class="stat"><div class="stat-num">SUNAT</div><div class="stat-lbl">E-Factura</div></div>
+    </div>
+    <div class="hero-contact-bar">
+      <div class="contact-item"><span>📍</span> Santa Anita, Lima — Perú</div>
+      <div class="contact-item"><span>📧</span> Wilianlibra2024@gmail.com</div>
+      <div class="contact-item"><span>📞</span> +51 982 257 569</div>
+    </div>
+  </div>
+</section>
+
+<section id="sobre-mi">
+  <div class="reveal">
+    <span class="section-label">// 01 — Sobre mí</span>
+    <h2 class="section-title">Quién soy y qué <em>me mueve</em></h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="about-grid">
+    <div class="about-card reveal">
+      <div class="about-card-top">
+        <div class="avatar-placeholder">👨‍💻</div>
+      </div>
+      <div class="about-card-body">
+        <div class="about-name">Andy Wilian Ramos Borda</div>
+        <div class="about-role">Full Stack Developer · ERP Integrator</div>
+        <div class="about-info-row"><span class="ico">📍</span> Santa Anita, Lima — Perú</div>
+        <div class="about-info-row"><span class="ico">🎓</span> Ing. Sistemas — U. Norbert Wiener</div>
+        <div class="about-info-row"><span class="ico">📞</span> +51 982 257 569</div>
+        <hr class="about-separator"/>
+        <div class="about-badge-row">
+          <span class="badge">SCRUM</span>
+          <span class="badge">MVC</span>
+          <span class="badge">REST APIs</span>
+          <span class="badge">SAP B1</span>
+          <span class="badge">Power BI</span>
+        </div>
+      </div>
+    </div>
+    <div class="about-text reveal">
+      <h3>Mi perfil</h3>
+      <p>Bachiller en Ingeniería de Sistemas e Informática con sólida formación académica y experiencia práctica en desarrollo de software, análisis de datos y administración de sistemas. Capaz de diseñar, implementar y mantener soluciones tecnológicas orientadas a resultados.</p>
+      <p>Manejo de metodologías ágiles, orientación a la calidad del código y experiencia en sistemas ERP, desarrollo web y escritorio. Comprometido con la mejora continua y el trabajo en equipo.</p>
+
+      <h3>Habilidades técnicas</h3>
+      <div class="skills-category">
+        <div class="skills-cat-title">Lenguajes de programación</div>
+        <div class="skills-row">
+          <span class="skill-tag">C# / .NET</span><span class="skill-tag">PHP (POO)</span>
+          <span class="skill-tag">JavaScript</span><span class="skill-tag">TypeScript</span>
+          <span class="skill-tag">HTML5 / CSS3</span><span class="skill-tag">SQL</span>
+        </div>
+      </div>
+      <div class="skills-category">
+        <div class="skills-cat-title">Frameworks & Librerías</div>
+        <div class="skills-row">
+          <span class="skill-tag">ASP.NET MVC</span><span class="skill-tag">.NET Core</span>
+          <span class="skill-tag">Bootstrap 5</span><span class="skill-tag">Angular</span>
+          <span class="skill-tag">Entity Framework</span><span class="skill-tag">jQuery</span>
+        </div>
+      </div>
+      <div class="skills-category">
+        <div class="skills-cat-title">Bases de datos</div>
+        <div class="skills-row">
+          <span class="skill-tag">SQL Server</span><span class="skill-tag">MySQL</span>
+          <span class="skill-tag">PostgreSQL</span><span class="skill-tag">Stored Procedures</span>
+          <span class="skill-tag">Triggers</span>
+        </div>
+      </div>
+      <div class="skills-category">
+        <div class="skills-cat-title">ERP & Herramientas</div>
+        <div class="skills-row">
+          <span class="skill-tag">SAP Business One</span><span class="skill-tag">Power BI</span>
+          <span class="skill-tag">Odoo</span><span class="skill-tag">Postman</span>
+          <span class="skill-tag">Swagger</span><span class="skill-tag">Figma</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="experiencia">
+  <div class="reveal">
+    <span class="section-label">// 02 — Experiencia</span>
+    <h2 class="section-title">Trayectoria <em>profesional</em></h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="timeline">
+    <div class="timeline-item reveal">
+      <div class="tl-dot"></div>
+      <div class="tl-content">
+        <div class="tl-meta">
+          <div><div class="tl-role">Desarrollador Full Stack</div><div class="tl-company">Inversiones Medical S.A.C</div></div>
+          <div class="tl-date">Mar 2025 — Actualidad</div>
+        </div>
+        <div class="tl-desc">
+          <ul>
+            <li>Diseño y construcción de sistemas web personalizados para gestión interna con PHP (POO), HTML5, CSS3, JavaScript y Bootstrap.</li>
+            <li>Implementación de sistemas de control de acceso por roles con seguridad lógica para mostrar/ocultar funcionalidades.</li>
+            <li>Creación y consumo de Web APIs en .NET Core conectadas a SQL Server para alimentar dashboards y formularios dinámicos.</li>
+            <li>Automatización de reportes con Power BI integrando Excel, SAP Business One y SQL Server.</li>
+            <li>Integración con SAP Business One para consultas de precios, actualización de stock y sincronización con el sistema web.</li>
+          </ul>
+        </div>
+        <span class="tl-current">● Posición actual</span>
+      </div>
+    </div>
+    <div class="timeline-item reveal">
+      <div class="tl-dot"></div>
+      <div class="tl-content">
+        <div class="tl-meta">
+          <div><div class="tl-role">Desarrollador Backend y de Integraciones</div><div class="tl-company">Corporación Computer System Solution</div></div>
+          <div class="tl-date">Ago — Oct 2024</div>
+        </div>
+        <div class="tl-desc">
+          <ul>
+            <li>Desarrollo de sistema de control de inventarios multiusuario con gestión de stock, movimientos, historial y alertas de reposición.</li>
+            <li>Diseño y consumo de APIs RESTful con Postman, Swagger y pruebas automatizadas.</li>
+            <li>Conexión a servidores externos mediante sockets y REST para intercambio de datos con entidades externas.</li>
+            <li>Desarrollo de scripts para facturación electrónica SUNAT en formatos XML/JSON según requerimientos normativos.</li>
+            <li>Validación y registro automático de comprobantes electrónicos en servidores seguros.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="timeline-item reveal">
+      <div class="tl-dot"></div>
+      <div class="tl-content">
+        <div class="tl-meta">
+          <div><div class="tl-role">Programador de Escritorio</div><div class="tl-company">Accenti S.A.C</div></div>
+          <div class="tl-date">Feb — Abr 2024</div>
+        </div>
+        <div class="tl-desc">
+          <ul>
+            <li>Migración de sistemas legados desde FoxPro a C# con Windows Forms, aplicando patrones Repository y Singleton.</li>
+            <li>Refactorización de código antiguo, eliminación de redundancias y mejora de rendimiento en módulos críticos.</li>
+            <li>Configuración y optimización de conexiones a SQL Server con stored procedures de alto rendimiento.</li>
+            <li>Aplicación de metodologías SCRUM en sprints, daily meetings y entregas continuas.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reveal" style="margin-top:4rem;">
+    <span class="section-label">// Formación académica</span>
+    <h3 class="section-title" style="font-size:1.5rem; margin-bottom:0.7rem;">Educación & <em>Certificaciones</em></h3>
+    <div class="section-line"></div>
+  </div>
+  <div class="edu-grid reveal">
+    <div class="edu-card">
+      <div class="edu-year">2018 — 2023</div>
+      <div class="edu-title">Bachiller en Ingeniería de Sistemas e Informática</div>
+      <div class="edu-inst">Universidad Privada Norbert Wiener</div>
+    </div>
+    <div class="edu-card">
+      <div class="edu-year">2017 — 2018</div>
+      <div class="edu-title">Técnico en Computación e Informática</div>
+      <div class="edu-inst">Instituto Norbert Wiener</div>
+    </div>
+    <div class="edu-card">
+      <div class="edu-year">Julio 2020</div>
+      <div class="edu-title">Ekoparty University Talks Perú 2020</div>
+      <div class="edu-inst">Ekoparty · Bsides Perú · UPC · CySecByWomen — 6 horas</div>
+    </div>
+  </div>
+</section>
+
+<section id="proyectos">
+  <div class="reveal">
+    <span class="section-label">// 03 — Proyectos</span>
+    <h2 class="section-title">Lo que he <em>construido</em></h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="projects-grid">
+    <div class="project-card reveal">
+      <div class="project-thumb t1">🏥</div>
+      <div class="project-body">
+        <div class="project-tags"><span class="ptag">PHP</span><span class="ptag">MySQL</span><span class="ptag">Bootstrap</span><span class="ptag">SAP B1</span></div>
+        <div class="project-name">Sistema de Gestión Web — Medical</div>
+        <p class="project-desc">Sistema web con control de acceso por roles, dashboards dinámicos, tablas maestras y trazabilidad multiusuario. Integrado con SAP Business One.</p>
+      </div>
+    </div>
+    <div class="project-card reveal">
+      <div class="project-thumb t2">📦</div>
+      <div class="project-body">
+        <div class="project-tags"><span class="ptag">.NET Core</span><span class="ptag">SQL Server</span><span class="ptag">REST API</span></div>
+        <div class="project-name">Control de Inventarios Multiusuario</div>
+        <p class="project-desc">Inventario completo con gestión de stock, historial de movimientos y alertas automáticas de reposición. APIs documentadas con Swagger.</p>
+      </div>
+    </div>
+    <div class="project-card reveal">
+      <div class="project-thumb t3">🧾</div>
+      <div class="project-body">
+        <div class="project-tags"><span class="ptag">C#</span><span class="ptag">SUNAT</span><span class="ptag">XML/JSON</span></div>
+        <div class="project-name">Facturación Electrónica SUNAT</div>
+        <p class="project-desc">Scripts adaptados a normativa peruana para emisión, validación y registro automático de comprobantes electrónicos en servidores seguros.</p>
+      </div>
+    </div>
+    <div class="project-card reveal">
+      <div class="project-thumb t4">📊</div>
+      <div class="project-body">
+        <div class="project-tags"><span class="ptag">Power BI</span><span class="ptag">SAP</span><span class="ptag">DAX</span></div>
+        <div class="project-name">Dashboard Ejecutivo Power BI</div>
+        <p class="project-desc">Reportes automatizados integrando SAP Business One, SQL Server y Excel. Visualizaciones gerenciales con DAX y relaciones complejas.</p>
+      </div>
+    </div>
+    <div class="project-card reveal">
+      <div class="project-thumb t1">🖥️</div>
+      <div class="project-body">
+        <div class="project-tags"><span class="ptag">C#</span><span class="ptag">WinForms</span><span class="ptag">SQL Server</span></div>
+        <div class="project-name">Migración FoxPro → C# WinForms</div>
+        <p class="project-desc">Modernización de sistema legacy a C# con Windows Forms. Patrones Repository y Singleton. Stored procedures optimizados y mejora de rendimiento.</p>
+      </div>
+    </div>
+    <div class="project-card reveal">
+      <div class="project-thumb t2">🔗</div>
+      <div class="project-body">
+        <div class="project-tags"><span class="ptag">Sockets</span><span class="ptag">REST</span><span class="ptag">SAP B1</span></div>
+        <div class="project-name">Integración SAP Business One</div>
+        <p class="project-desc">Integración bidireccional con SAP B1 para sincronización de precios y stock. Conexión a entidades externas vía REST y sockets TCP.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="servicios">
+  <div class="reveal">
+    <span class="section-label">// 04 — Servicios</span>
+    <h2 class="section-title">¿En qué puedo <em>ayudarte?</em></h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <div class="service-icon">🌐</div>
+      <div class="service-name">Desarrollo Web Full Stack</div>
+      <p class="service-desc">Sistemas web a medida con PHP, .NET Core, JavaScript y Bootstrap. Desde módulos CRUD hasta plataformas con múltiples roles y lógica empresarial compleja.</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">🔌</div>
+      <div class="service-name">APIs RESTful & Backend</div>
+      <p class="service-desc">Diseño e implementación de Web APIs en .NET Core y PHP. Documentación con Swagger, pruebas con Postman y arquitectura MVC limpia.</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">🏢</div>
+      <div class="service-name">Integración SAP Business One</div>
+      <p class="service-desc">Conexión de sistemas propios con SAP B1. Sincronización de inventario, precios y transacciones. Consultas y actualizaciones en tiempo real.</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">🧾</div>
+      <div class="service-name">Facturación Electrónica SUNAT</div>
+      <p class="service-desc">Implementación completa según normativa SUNAT. Generación de XML/JSON, validación automática y registro en servidores seguros.</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">📊</div>
+      <div class="service-name">Reportes Power BI</div>
+      <p class="service-desc">Dashboards interactivos conectados a SQL Server, SAP y Excel. DAX, relaciones complejas y visualizaciones ejecutivas para toma de decisiones.</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">🗄️</div>
+      <div class="service-name">BD & Optimización SQL</div>
+      <p class="service-desc">Diseño relacional, normalización, stored procedures y triggers en SQL Server y MySQL. Optimización de consultas críticas y mejora de rendimiento.</p>
+    </div>
+  </div>
+</section>
+
+<section id="contacto">
+  <div class="contact-inner">
+    <div class="reveal">
+      <span class="section-label">// 05 — Contacto</span>
+      <h2 class="section-title">¿Tienes un proyecto <em>en mente?</em></h2>
+      <div class="section-line" style="margin:0 auto 1.5rem;"></div>
+      <p class="contact-sub">Cuéntame de tu idea. Respondo en menos de 24 horas.</p>
+    </div>
+    <form class="contact-form reveal" onsubmit="handleSubmit(event)">
+      <div class="form-row">
+        <div class="form-group"><label>Nombre</label><input type="text" placeholder="Tu nombre completo" /></div>
+        <div class="form-group"><label>Email</label><input type="email" placeholder="tu@email.com" /></div>
+      </div>
+      <div class="form-group">
+        <label>Servicio</label>
+        <select>
+          <option value="">¿Qué necesitas?</option>
+          <option>Desarrollo Web Full Stack</option>
+          <option>API RESTful / Backend</option>
+          <option>Integración SAP Business One</option>
+          <option>Facturación Electrónica SUNAT</option>
+          <option>Reportes Power BI</option>
+          <option>Base de Datos & SQL</option>
+          <option>Otro</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Mensaje</label><textarea rows="5" placeholder="Cuéntame sobre tu proyecto, plazos y presupuesto..."></textarea></div>
+      <button type="submit" class="form-submit">Enviar mensaje →</button>
+    </form>
+    <div class="contact-direct reveal">
+      <a href="mailto:Wilianlibra2024@gmail.com" class="direct-card">
+        <div class="direct-ico">✉️</div>
+        <div><div class="direct-lbl">Email principal</div><div class="direct-val">Wilianlibra2024@gmail.com</div></div>
+      </a>
+      <a href="mailto:Wilianlibra19@gmail.com" class="direct-card">
+        <div class="direct-ico">📬</div>
+        <div><div class="direct-lbl">Email alternativo</div><div class="direct-val">Wilianlibra19@gmail.com</div></div>
+      </a>
+      <a href="tel:+51982257569" class="direct-card">
+        <div class="direct-ico">📞</div>
+        <div><div class="direct-lbl">Teléfono</div><div class="direct-val">+51 982 257 569</div></div>
+      </a>
+      <a href="#" class="direct-card">
+        <div class="direct-ico">📍</div>
+        <div><div class="direct-lbl">Ubicación</div><div class="direct-val">Santa Anita, Lima — Perú</div></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 <a href="#inicio">Andy Wilian Ramos Borda</a>. Hecho con 💙 en Lima, Perú.</p>
+  <p>Bachiller Ing. Sistemas · <a href="mailto:Wilianlibra2024@gmail.com">Wilianlibra2024@gmail.com</a></p>
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 90);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08 });
+  reveals.forEach(el => observer.observe(el));
+
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => { if (window.scrollY >= s.offsetTop - 90) current = s.id; });
+    navLinks.forEach(a => { a.style.color = a.getAttribute('href') === '#' + current ? 'var(--accent)' : ''; });
+  });
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('.form-submit');
+    btn.textContent = '✓ Mensaje enviado correctamente';
+    btn.style.background = 'var(--accent3)';
+    setTimeout(() => { btn.textContent = 'Enviar mensaje →'; btn.style.background = ''; e.target.reset(); }, 3500);
+  }
+</script>
+</body>
+</html>
