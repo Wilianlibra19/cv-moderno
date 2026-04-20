@@ -1,596 +1,3264 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Andy Ramos — Desarrollador Full Stack</title>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
-  <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-    :root {
-      --bg: #080c10; --bg2: #0d1117; --surface: #131920;
-      --border: rgba(255,255,255,0.07);
-      --accent: #00d4ff; --accent2: #0066ff; --accent3: #00ffaa;
-      --text: #e2eaf4; --muted: #5a7080;
-      --font-display: 'Syne', sans-serif; --font-body: 'DM Sans', sans-serif;
-    }
-    html { scroll-behavior: smooth; }
-    body { background: var(--bg); color: var(--text); font-family: var(--font-body); font-size: 16px; line-height: 1.6; overflow-x: hidden; }
-    body::before {
-      content: ''; position: fixed; inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
-      pointer-events: none; z-index: 9999; opacity: 0.35;
-    }
-    body::after {
-      content: ''; position: fixed; inset: 0;
-      background-image: linear-gradient(rgba(0,212,255,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(0,212,255,0.025) 1px, transparent 1px);
-      background-size: 60px 60px; pointer-events: none; z-index: 0;
-    }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Andy Ramos · Full Stack Developer & ERP Integrator</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,700&family=DM+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <style>
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
 
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 1.1rem 5vw;
-      background: rgba(8,12,16,0.88); backdrop-filter: blur(24px);
-      border-bottom: 1px solid var(--border);
-    }
-    .nav-logo { font-family: var(--font-display); font-weight: 800; font-size: 1.05rem; letter-spacing: -0.02em; color: var(--text); text-decoration: none; }
-    .nav-logo .dot { color: var(--accent); }
-    .nav-links { display: flex; gap: 2rem; list-style: none; }
-    .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.82rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; transition: color 0.2s; }
-    .nav-links a:hover { color: var(--accent); }
-    .nav-cta { background: transparent; border: 1px solid var(--accent); color: var(--accent); padding: 0.45rem 1.2rem; border-radius: 6px; font-size: 0.82rem; font-weight: 600; text-decoration: none; letter-spacing: 0.04em; transition: background 0.2s, color 0.2s; }
-    .nav-cta:hover { background: var(--accent); color: var(--bg); }
+        :root {
+            --cream: #080c10;
+            --cream2: #0d1117;
+            --warm: #0a1018;
+            --ink: #e2eaf4;
+            --ink2: #c8d8e8;
+            --mid: #7a9ab5;
+            --soft: #4a6880;
+            --ember: #00d4ff;
+            --ember2: #33ddff;
+            --teal: #00ffaa;
+            --teal2: #00dd88;
+            --gold: #0066ff;
+            --gold2: #0044cc;
+            --card: #0e1620;
+            --card2: #0a1018;
+            --border: rgba(255, 255, 255, 0.07);
+            --border2: rgba(255, 255, 255, 0.04);
+            --shadow: 0 2px 40px rgba(0, 0, 0, 0.4);
+            --shadow-deep: 0 20px 80px rgba(0, 0, 0, 0.6);
+            --font-d: 'Fraunces', serif;
+            --font-b: 'Plus Jakarta Sans', sans-serif;
+            --font-m: 'DM Mono', monospace;
+        }
 
-    #inicio { min-height: 100vh; display: flex; align-items: center; padding: 8rem 5vw 4rem; position: relative; overflow: hidden; }
-    .hero-glow { position: absolute; width: 700px; height: 700px; border-radius: 50%; background: radial-gradient(circle, rgba(0,102,255,0.12) 0%, transparent 65%); top: -150px; right: -150px; pointer-events: none; }
-    .hero-glow2 { position: absolute; width: 500px; height: 500px; border-radius: 50%; background: radial-gradient(circle, rgba(0,212,255,0.07) 0%, transparent 65%); bottom: -100px; left: 5%; pointer-events: none; }
-    .hero-inner { max-width: 960px; position: relative; z-index: 1; }
-    .hero-tag { display: inline-flex; align-items: center; gap: 0.6rem; background: rgba(0,212,255,0.08); border: 1px solid rgba(0,212,255,0.2); color: var(--accent); border-radius: 6px; padding: 0.35rem 1rem; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 2rem; animation: fadeUp 0.6s ease both; }
-    .hero-tag .blink { width: 6px; height: 6px; border-radius: 50%; background: var(--accent3); animation: blink 1.4s infinite; display: inline-block; }
-    @keyframes blink { 0%,100%{opacity:1}50%{opacity:0.2} }
-    h1 { font-family: var(--font-display); font-size: clamp(2.8rem, 7.5vw, 5.5rem); font-weight: 800; line-height: 1.0; letter-spacing: -0.04em; animation: fadeUp 0.7s ease 0.1s both; }
-    h1 .name { color: var(--accent); display: block; }
-    h1 .role { display: block; font-size: 0.45em; color: transparent; -webkit-text-stroke: 1px rgba(0,212,255,0.3); letter-spacing: -0.01em; margin-top: 0.2em; }
-    .hero-desc { margin-top: 1.8rem; font-size: 1.05rem; color: var(--muted); max-width: 560px; font-weight: 300; line-height: 1.8; animation: fadeUp 0.7s ease 0.2s both; }
-    .hero-actions { display: flex; gap: 1rem; margin-top: 2.5rem; flex-wrap: wrap; animation: fadeUp 0.7s ease 0.3s both; }
-    .btn-primary { background: var(--accent); color: var(--bg); padding: 0.85rem 2rem; border-radius: 6px; font-weight: 700; text-decoration: none; font-size: 0.9rem; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 0 25px rgba(0,212,255,0.25); }
-    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 4px 35px rgba(0,212,255,0.4); }
-    .btn-ghost { background: transparent; color: var(--text); padding: 0.85rem 2rem; border-radius: 6px; font-weight: 500; text-decoration: none; font-size: 0.9rem; border: 1px solid var(--border); transition: border-color 0.2s, color 0.2s; }
-    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
-    .hero-stats { display: flex; margin-top: 4rem; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; width: fit-content; animation: fadeUp 0.7s ease 0.4s both; }
-    .stat { padding: 1.2rem 2rem; border-right: 1px solid var(--border); }
-    .stat:last-child { border-right: none; }
-    .stat-num { font-family: var(--font-display); font-size: 2rem; font-weight: 800; color: var(--accent); line-height: 1; }
-    .stat-lbl { font-size: 0.72rem; color: var(--muted); margin-top: 0.25rem; letter-spacing: 0.04em; }
-    .hero-contact-bar { display: flex; gap: 2rem; margin-top: 2rem; flex-wrap: wrap; animation: fadeUp 0.7s ease 0.5s both; }
-    .contact-item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.82rem; color: var(--muted); }
-    .contact-item span { color: var(--accent); }
-    @keyframes fadeUp { from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)} }
+        html {
+            scroll-behavior: smooth
+        }
 
-    section { padding: 7rem 5vw; position: relative; z-index: 1; }
-    .section-label { display: inline-block; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.5rem; }
-    .section-title { font-family: var(--font-display); font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1.15; margin-bottom: 0.8rem; }
-    .section-title em { color: var(--accent); font-style: normal; }
-    .section-line { width: 48px; height: 2px; background: linear-gradient(90deg, var(--accent), var(--accent2)); margin-bottom: 3rem; }
+        body {
+            background: var(--cream);
+            color: var(--ink);
+            font-family: var(--font-b);
+            overflow-x: hidden;
+            line-height: 1.6;
+            cursor: none
+        }
 
-    #sobre-mi { background: var(--bg2); }
-    .about-grid { display: grid; grid-template-columns: 300px 1fr; gap: 4rem; align-items: start; }
-    .about-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; position: sticky; top: 100px; }
-    .about-card-top { height: 180px; background: linear-gradient(135deg, #0a1a2e, #001433); display: flex; align-items: center; justify-content: center; position: relative; }
-    .about-card-top::after { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 60% 40%, rgba(0,212,255,0.12), transparent 60%); }
-    .avatar-placeholder { width: 80px; height: 80px; border-radius: 50%; background: rgba(0,212,255,0.1); border: 2px solid rgba(0,212,255,0.3); display: flex; align-items: center; justify-content: center; font-size: 2.2rem; position: relative; z-index: 1; }
-    .about-card-body { padding: 1.4rem; }
-    .about-name { font-family: var(--font-display); font-weight: 700; font-size: 1rem; margin-bottom: 0.25rem; }
-    .about-role { color: var(--accent); font-size: 0.82rem; font-weight: 500; margin-bottom: 1rem; }
-    .about-info-row { display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; color: var(--muted); margin-bottom: 0.45rem; }
-    .about-info-row .ico { color: var(--accent); }
-    .about-separator { border: none; border-top: 1px solid var(--border); margin: 1rem 0; }
-    .about-badge-row { display: flex; flex-wrap: wrap; gap: 0.4rem; }
-    .badge { background: rgba(0,212,255,0.08); border: 1px solid rgba(0,212,255,0.18); color: var(--accent); padding: 0.22rem 0.65rem; border-radius: 4px; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.04em; }
-    .about-text h3 { font-family: var(--font-display); font-weight: 700; font-size: 1rem; margin: 2rem 0 0.7rem; color: var(--text); }
-    .about-text h3:first-child { margin-top: 0; }
-    .about-text p { color: var(--muted); margin-bottom: 1rem; font-weight: 300; line-height: 1.8; font-size: 0.92rem; }
-    .skills-category { margin-bottom: 1.4rem; }
-    .skills-cat-title { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 0.5rem; }
-    .skills-row { display: flex; flex-wrap: wrap; gap: 0.45rem; }
-    .skill-tag { background: var(--surface); border: 1px solid var(--border); color: var(--text); padding: 0.3rem 0.75rem; border-radius: 6px; font-size: 0.78rem; font-weight: 500; transition: border-color 0.2s, color 0.2s; cursor: default; }
-    .skill-tag:hover { border-color: var(--accent); color: var(--accent); }
+        #cur {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: var(--ember);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: width .3s, height .3s
+        }
 
-    #experiencia { background: var(--bg); }
-    .timeline { margin-top: 1rem; position: relative; }
-    .timeline::before { content: ''; position: absolute; left: 12px; top: 10px; bottom: 10px; width: 1px; background: linear-gradient(to bottom, var(--accent), transparent); }
-    .timeline-item { display: flex; gap: 2.5rem; margin-bottom: 2.5rem; position: relative; }
-    .tl-dot { width: 26px; height: 26px; border-radius: 50%; flex-shrink: 0; background: var(--bg); border: 2px solid var(--accent); position: relative; top: 6px; box-shadow: 0 0 14px rgba(0,212,255,0.5); }
-    .tl-dot::after { content: ''; position: absolute; inset: 4px; border-radius: 50%; background: var(--accent); }
-    .tl-content { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 1.8rem; flex: 1; transition: border-color 0.3s, box-shadow 0.3s; }
-    .tl-content:hover { border-color: rgba(0,212,255,0.25); box-shadow: 0 8px 30px rgba(0,0,0,0.3); }
-    .tl-meta { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.8rem; }
-    .tl-role { font-family: var(--font-display); font-weight: 700; font-size: 1.05rem; margin-bottom: 0.2rem; }
-    .tl-company { color: var(--accent); font-weight: 500; font-size: 0.85rem; }
-    .tl-date { background: rgba(0,212,255,0.08); border: 1px solid rgba(0,212,255,0.18); color: var(--accent); padding: 0.22rem 0.75rem; border-radius: 4px; font-size: 0.7rem; font-weight: 700; white-space: nowrap; letter-spacing: 0.06em; }
-    .tl-desc { color: var(--muted); font-size: 0.87rem; line-height: 1.7; }
-    .tl-desc ul { padding-left: 1.1rem; margin-top: 0.4rem; }
-    .tl-desc li { margin-bottom: 0.35rem; }
-    .tl-current { display: inline-block; margin-top: 0.8rem; background: rgba(0,255,170,0.1); border: 1px solid rgba(0,255,170,0.25); color: var(--accent3); padding: 0.18rem 0.65rem; border-radius: 4px; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+        #cur-r {
+            position: fixed;
+            width: 38px;
+            height: 38px;
+            border: 1.5px solid rgba(232, 93, 38, .4);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9998;
+            transform: translate(-50%, -50%);
+            transition: left .18s ease, top .18s ease, width .3s, height .3s
+        }
 
-    .edu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.2rem; }
-    .edu-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.4rem; transition: border-color 0.3s; }
-    .edu-card:hover { border-color: rgba(0,212,255,0.22); }
-    .edu-year { font-size: 0.7rem; font-weight: 700; color: var(--accent); letter-spacing: 0.1em; margin-bottom: 0.35rem; }
-    .edu-title { font-family: var(--font-display); font-weight: 700; font-size: 0.92rem; margin-bottom: 0.3rem; }
-    .edu-inst { color: var(--muted); font-size: 0.82rem; }
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 300;
+            padding: 1.3rem 6vw;
+            display: flex;
+            justify-content: space-between;
+            align-items: center
+        }
 
-    #proyectos { background: var(--bg2); }
-    .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; }
-    .project-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s; display: flex; flex-direction: column; }
-    .project-card:hover { transform: translateY(-5px); border-color: rgba(0,212,255,0.25); box-shadow: 0 15px 40px rgba(0,0,0,0.4); }
-    .project-thumb { height: 150px; display: flex; align-items: center; justify-content: center; font-size: 2.8rem; position: relative; }
-    .t1 { background: linear-gradient(135deg, #080c18, #101840); }
-    .t2 { background: linear-gradient(135deg, #061218, #0a2030); }
-    .t3 { background: linear-gradient(135deg, #0c0818, #1a0d30); }
-    .t4 { background: linear-gradient(135deg, #080e18, #0d1e3a); }
-    .project-thumb::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 40%, var(--surface)); }
-    .project-body { padding: 1.3rem; flex: 1; display: flex; flex-direction: column; }
-    .project-tags { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 0.6rem; }
-    .ptag { font-size: 0.67rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; background: rgba(0,212,255,0.08); color: var(--accent); padding: 0.18rem 0.5rem; border-radius: 3px; }
-    .project-name { font-family: var(--font-display); font-weight: 700; font-size: 0.98rem; margin-bottom: 0.5rem; }
-    .project-desc { color: var(--muted); font-size: 0.83rem; line-height: 1.6; flex: 1; }
+        nav::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(8, 12, 16, .92);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border2);
+            opacity: 0;
+            transition: opacity .4s;
+            z-index: -1
+        }
 
-    #servicios { background: var(--bg); }
-    .services-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
-    .service-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 2rem; transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s; position: relative; overflow: hidden; }
-    .service-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--accent), var(--accent2)); transform: scaleX(0); transform-origin: left; transition: transform 0.35s; }
-    .service-card:hover { transform: translateY(-4px); border-color: rgba(0,212,255,0.2); box-shadow: 0 12px 35px rgba(0,0,0,0.35); }
-    .service-card:hover::before { transform: scaleX(1); }
-    .service-icon { width: 48px; height: 48px; border-radius: 12px; background: rgba(0,212,255,0.08); border: 1px solid rgba(0,212,255,0.15); display: flex; align-items: center; justify-content: center; font-size: 1.3rem; margin-bottom: 1.2rem; }
-    .service-name { font-family: var(--font-display); font-weight: 700; font-size: 1rem; margin-bottom: 0.5rem; }
-    .service-desc { color: var(--muted); font-size: 0.84rem; line-height: 1.7; }
+        nav.sc::before {
+            opacity: 1
+        }
 
-    #contacto { background: var(--bg2); text-align: center; }
-    .contact-inner { max-width: 620px; margin: 0 auto; }
-    .contact-sub { color: var(--muted); margin-bottom: 3rem; font-size: 0.92rem; }
-    .contact-form { display: flex; flex-direction: column; gap: 1rem; text-align: left; }
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-    .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
-    .form-group label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); }
-    .form-group input, .form-group textarea, .form-group select { background: var(--surface); border: 1px solid var(--border); color: var(--text); border-radius: 8px; padding: 0.78rem 0.9rem; font-family: var(--font-body); font-size: 0.9rem; outline: none; transition: border-color 0.2s, box-shadow 0.2s; resize: vertical; }
-    .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(0,212,255,0.1); }
-    .form-group select option { background: var(--surface); }
-    .form-submit { background: var(--accent); color: var(--bg); border: none; border-radius: 8px; padding: 1rem 2.5rem; font-family: var(--font-display); font-weight: 700; font-size: 0.95rem; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 0 25px rgba(0,212,255,0.25); width: 100%; letter-spacing: 0.03em; }
-    .form-submit:hover { transform: translateY(-2px); box-shadow: 0 4px 35px rgba(0,212,255,0.4); }
-    .contact-direct { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 2.5rem; }
-    .direct-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 1.1rem; display: flex; align-items: center; gap: 0.8rem; text-decoration: none; transition: border-color 0.2s; }
-    .direct-card:hover { border-color: var(--accent); }
-    .direct-ico { font-size: 1.25rem; }
-    .direct-lbl { font-size: 0.68rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
-    .direct-val { color: var(--text); font-size: 0.82rem; font-weight: 500; margin-top: 0.1rem; }
+        .nb {
+            display: flex;
+            align-items: center;
+            gap: .5rem;
+            text-decoration: none
+        }
 
-    footer { padding: 2rem 5vw; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; background: var(--bg); position: relative; z-index: 1; }
-    footer p { color: var(--muted); font-size: 0.8rem; }
-    footer a { color: var(--accent); text-decoration: none; }
+        .nb-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--ember)
+        }
 
-    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.65s ease, transform 0.65s ease; }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
+        .nb-name {
+            font-family: var(--font-d);
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--ink)
+        }
 
-    @media (max-width: 860px) {
-      .about-grid { grid-template-columns: 1fr; gap: 2rem; }
-      .about-card { position: static; }
-      .form-row { grid-template-columns: 1fr; }
-      .nav-links { display: none; }
-      .contact-direct { grid-template-columns: 1fr; }
-      .hero-stats { flex-wrap: wrap; }
-    }
-  </style>
+        .nl {
+            display: flex;
+            gap: 2rem;
+            list-style: none
+        }
+
+        .nl a {
+            color: var(--mid);
+            font-size: .8rem;
+            font-weight: 600;
+            text-decoration: none;
+            letter-spacing: .04em;
+            transition: color .2s;
+            position: relative
+        }
+
+        .nl a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1.5px;
+            background: var(--ember);
+            transition: width .25s
+        }
+
+        .nl a:hover,
+        .nl a.ac {
+            color: var(--ink)
+        }
+
+        .nl a:hover::after,
+        .nl a.ac::after {
+            width: 100%
+        }
+
+        .nhire {
+            background: var(--ember);
+            color: #000;
+            padding: .6rem 1.5rem;
+            border-radius: 50px;
+            font-size: .78rem;
+            font-weight: 700;
+            text-decoration: none;
+            letter-spacing: .05em;
+            transition: background .2s, transform .2s
+        }
+
+        .nhire:hover {
+            background: var(--ember2);
+            transform: translateY(-2px)
+        }
+
+        /* HERO */
+        #hero {
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            padding: 8rem 6vw 5rem;
+            position: relative;
+            overflow: hidden;
+            gap: 4rem
+        }
+
+        #hc {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none
+        }
+
+        .hbg1 {
+            position: absolute;
+            top: -8%;
+            right: -4%;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0, 212, 255, .07) 0%, rgba(0, 102, 255, .05) 40%, transparent 70%);
+            pointer-events: none
+        }
+
+        .hbg2 {
+            position: absolute;
+            bottom: -10%;
+            left: -5%;
+            width: 380px;
+            height: 380px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0, 255, 170, .05), transparent 65%);
+            pointer-events: none
+        }
+
+        .hl {
+            position: relative;
+            z-index: 2
+        }
+
+        .hst {
+            display: inline-flex;
+            align-items: center;
+            gap: .6rem;
+            background: rgba(0, 255, 170, .07);
+            border: 1px solid rgba(0, 255, 170, .18);
+            border-radius: 50px;
+            padding: .35rem .9rem;
+            margin-bottom: 2rem;
+            animation: ru .7s ease both
+        }
+
+        .hst-d {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--teal2);
+            box-shadow: 0 0 8px var(--teal2);
+            animation: sp 2s infinite
+        }
+
+        @keyframes sp {
+
+            0%,
+            100% {
+                box-shadow: 0 0 8px var(--teal2)
+            }
+
+            50% {
+                box-shadow: 0 0 20px var(--teal2), 0 0 40px rgba(0, 255, 170, .2)
+            }
+        }
+
+        .hst-t {
+            font-size: .72rem;
+            font-weight: 600;
+            color: var(--teal);
+            letter-spacing: .06em;
+            text-transform: uppercase
+        }
+
+        h1.hh {
+            font-family: var(--font-d);
+            font-size: clamp(3rem, 6vw, 5.5rem);
+            font-weight: 900;
+            line-height: .95;
+            letter-spacing: -.03em;
+            animation: ru .8s ease .08s both
+        }
+
+        h1.hh .l1 {
+            display: block;
+            color: var(--soft)
+        }
+
+        h1.hh .l2 {
+            display: block;
+            color: var(--ink)
+        }
+
+        h1.hh .l3 {
+            display: block;
+            color: var(--ember);
+            font-style: italic;
+            font-weight: 300
+        }
+
+        .htl {
+            margin-top: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: .8rem;
+            animation: ru .8s ease .14s both
+        }
+
+        .htl-ln {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, var(--warm), transparent)
+        }
+
+        .htl-t {
+            font-size: .88rem;
+            color: var(--mid);
+            font-weight: 500;
+            white-space: nowrap
+        }
+
+        .hdesc {
+            margin-top: 1.8rem;
+            font-size: .98rem;
+            color: var(--mid);
+            line-height: 1.9;
+            max-width: 500px;
+            animation: ru .8s ease .2s both
+        }
+
+        .hdesc strong {
+            color: var(--ink);
+            font-weight: 600
+        }
+
+        .hbtns {
+            display: flex;
+            gap: .9rem;
+            margin-top: 2.2rem;
+            flex-wrap: wrap;
+            animation: ru .8s ease .26s both
+        }
+
+        .bfire {
+            background: var(--ember);
+            color: #000;
+            padding: .9rem 2rem;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: .88rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: .5rem;
+            transition: all .25s;
+            box-shadow: 0 6px 30px rgba(0, 212, 255, .25)
+        }
+
+        .bfire:hover {
+            background: var(--ember2);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(0, 212, 255, .4)
+        }
+
+        .boutl {
+            background: transparent;
+            color: var(--ink);
+            padding: .9rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: .88rem;
+            text-decoration: none;
+            border: 1.5px solid var(--border);
+            display: inline-flex;
+            align-items: center;
+            gap: .5rem;
+            transition: all .25s
+        }
+
+        .boutl:hover {
+            background: rgba(0, 212, 255, .08);
+            border-color: var(--ember);
+            color: var(--ember);
+            transform: translateY(-3px)
+        }
+
+        .hcr {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+            animation: ru .8s ease .32s both
+        }
+
+        .hci {
+            display: flex;
+            align-items: center;
+            gap: .45rem;
+            font-size: .78rem;
+            color: var(--soft);
+            text-decoration: none;
+            transition: color .2s
+        }
+
+        .hci:hover {
+            color: var(--ember)
+        }
+
+        .hsr {
+            display: flex;
+            gap: 0;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            overflow: hidden;
+            margin-top: 2rem;
+            animation: ru .8s ease .38s both;
+            background: var(--card2);
+            max-width: fit-content
+        }
+
+        .hs {
+            padding: 1.1rem 1.8rem;
+            border-right: 1px solid var(--border);
+            transition: background .2s
+        }
+
+        .hs:last-child {
+            border-right: none
+        }
+
+        .hs:hover {
+            background: var(--cream2)
+        }
+
+        .hs-n {
+            font-family: var(--font-d);
+            font-size: 1.9rem;
+            font-weight: 900;
+            color: var(--ink);
+            line-height: 1
+        }
+
+        .hs-l {
+            font-size: .64rem;
+            color: var(--soft);
+            text-transform: uppercase;
+            letter-spacing: .07em;
+            margin-top: .2rem
+        }
+
+        .hr {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: ru .9s ease .15s both
+        }
+
+        .hscene {
+            perspective: 900px;
+            width: 340px;
+            height: 470px
+        }
+
+        .hsi {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: hf 6s ease-in-out infinite
+        }
+
+        @keyframes hf {
+
+            0%,
+            100% {
+                transform: rotateY(-8deg) rotateX(4deg) translateY(0)
+            }
+
+            50% {
+                transform: rotateY(-4deg) rotateX(2deg) translateY(-14px)
+            }
+        }
+
+        .hcm {
+            position: absolute;
+            inset: 0;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 2.5rem;
+            box-shadow: var(--shadow-deep), inset 0 1px 0 rgba(255, 255, 255, .8);
+            display: flex;
+            flex-direction: column;
+            gap: 1.4rem
+        }
+
+        .hav-ring {
+            width: 88px;
+            height: 88px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(0, 212, 255, .3), rgba(0, 102, 255, .2));
+            padding: 3px;
+            box-shadow: 0 8px 30px rgba(0, 212, 255, .2)
+        }
+
+        .hav-in {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: var(--card2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.4rem
+        }
+
+        .hcn {
+            font-family: var(--font-d);
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--ink);
+            margin-bottom: .15rem
+        }
+
+        .hcrl {
+            font-size: .78rem;
+            color: var(--ember);
+            font-weight: 600;
+            letter-spacing: .04em
+        }
+
+        .hdiv {
+            height: 1px;
+            background: var(--border)
+        }
+
+        .hcss {
+            display: flex;
+            justify-content: space-between
+        }
+
+        .hcs {
+            text-align: center
+        }
+
+        .hcs-n {
+            font-family: var(--font-d);
+            font-size: 1.6rem;
+            font-weight: 900;
+            color: var(--ember);
+            line-height: 1
+        }
+
+        .hcs-l {
+            font-size: .62rem;
+            color: var(--soft);
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            margin-top: .2rem
+        }
+
+        .hil {
+            display: flex;
+            flex-direction: column;
+            gap: .55rem
+        }
+
+        .hi {
+            display: flex;
+            align-items: center;
+            gap: .6rem;
+            font-size: .78rem;
+            color: var(--mid)
+        }
+
+        .hi-ic {
+            width: 28px;
+            height: 28px;
+            border-radius: 7px;
+            background: rgba(0, 212, 255, .07);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: .8rem;
+            flex-shrink: 0
+        }
+
+        .htr {
+            display: flex;
+            flex-wrap: wrap;
+            gap: .35rem
+        }
+
+        .ht {
+            background: rgba(0, 212, 255, .07);
+            border: 1px solid rgba(0, 212, 255, .15);
+            color: var(--ink2);
+            padding: .22rem .65rem;
+            border-radius: 6px;
+            font-size: .67rem;
+            font-weight: 600
+        }
+
+        .fchip {
+            position: absolute;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: .5rem .9rem;
+            font-size: .72rem;
+            font-weight: 700;
+            color: var(--ink);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, .3);
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: .4rem
+        }
+
+        .fchip.c1 {
+            top: 4%;
+            right: -16%;
+            animation: cf1 5s ease-in-out infinite
+        }
+
+        .fchip.c2 {
+            bottom: 22%;
+            right: -18%;
+            animation: cf2 5.5s ease-in-out infinite .5s
+        }
+
+        .fchip.c3 {
+            bottom: 6%;
+            left: -16%;
+            animation: cf1 4.8s ease-in-out infinite 1s
+        }
+
+        .cd {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%
+        }
+
+        .cd.e {
+            background: var(--ember)
+        }
+
+        .cd.t {
+            background: var(--teal2)
+        }
+
+        .cd.g {
+            background: var(--gold2)
+        }
+
+        @keyframes cf1 {
+
+            0%,
+            100% {
+                transform: translateY(0) rotate(-2deg)
+            }
+
+            50% {
+                transform: translateY(-8px) rotate(1deg)
+            }
+        }
+
+        @keyframes cf2 {
+
+            0%,
+            100% {
+                transform: translateY(0) rotate(2deg)
+            }
+
+            50% {
+                transform: translateY(-10px) rotate(-1deg)
+            }
+        }
+
+        .scue {
+            position: absolute;
+            bottom: 2.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: .4rem;
+            z-index: 2;
+            animation: ru 1s ease 1.2s both
+        }
+
+        .scue-l {
+            width: 1px;
+            height: 44px;
+            background: linear-gradient(to bottom, transparent, var(--mid), transparent);
+            animation: scp 2.4s ease-in-out infinite
+        }
+
+        @keyframes scp {
+
+            0%,
+            100% {
+                opacity: .3;
+                transform: scaleY(.5)
+            }
+
+            50% {
+                opacity: 1;
+                transform: scaleY(1)
+            }
+        }
+
+        .scue-t {
+            font-size: .6rem;
+            color: var(--soft);
+            letter-spacing: .2em;
+            text-transform: uppercase
+        }
+
+        @keyframes ru {
+            from {
+                opacity: 0;
+                transform: translateY(28px)
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0)
+            }
+        }
+
+        /* SECTIONS */
+        .sec {
+            padding: 8rem 6vw;
+            position: relative
+        }
+
+        .ey {
+            display: inline-flex;
+            align-items: center;
+            gap: .55rem;
+            font-size: .68rem;
+            font-weight: 700;
+            letter-spacing: .15em;
+            text-transform: uppercase;
+            color: var(--ember);
+            margin-bottom: .7rem
+        }
+
+        .ey::before {
+            content: '';
+            width: 22px;
+            height: 1.5px;
+            background: var(--ember)
+        }
+
+        .st {
+            font-family: var(--font-d);
+            font-size: clamp(2.2rem, 4.5vw, 3.6rem);
+            font-weight: 900;
+            letter-spacing: -.03em;
+            line-height: 1.05;
+            color: var(--ink)
+        }
+
+        .st em {
+            font-style: italic;
+            font-weight: 300;
+            color: var(--mid)
+        }
+
+        .sd {
+            color: var(--mid);
+            font-size: .92rem;
+            line-height: 1.85;
+            max-width: 500px;
+            margin-top: .8rem
+        }
+
+        .sln {
+            width: 40px;
+            height: 2px;
+            background: var(--ember);
+            margin: 1.2rem 0 3.5rem;
+            border-radius: 2px
+        }
+
+        /* ABOUT */
+        #sobre-mi {
+            background: var(--cream2)
+        }
+
+        .ab-grid {
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            gap: 5.5rem;
+            align-items: start
+        }
+
+        .ab-stk {
+            position: sticky;
+            top: 110px
+        }
+
+        .pcard {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: var(--shadow-deep)
+        }
+
+        .ph {
+            height: 185px;
+            position: relative;
+            background: linear-gradient(135deg, #060e1a, #010620 60%, #021a10);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center
+        }
+
+        .ph .go {
+            position: absolute;
+            inset: 0;
+            background-image: linear-gradient(rgba(0, 212, 255, .06) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 212, 255, .06) 1px, transparent 1px);
+            background-size: 25px 25px
+        }
+
+        .ph .g1 {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0, 212, 255, .15), transparent 65%);
+            top: -60px;
+            right: -40px
+        }
+
+        .ph .g2 {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0, 102, 255, .1), transparent 65%);
+            bottom: -20px;
+            left: 20px
+        }
+
+        .pavi {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            background: rgba(0, 212, 255, .08);
+            border: 2.5px solid rgba(0, 212, 255, .3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.6rem;
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 0 40px rgba(0, 212, 255, .15)
+        }
+
+        .pb {
+            padding: 2rem
+        }
+
+        .pn {
+            font-family: var(--font-d);
+            font-weight: 700;
+            font-size: 1.05rem;
+            color: var(--ink);
+            margin-bottom: .2rem
+        }
+
+        .pr {
+            color: var(--ember);
+            font-size: .8rem;
+            font-weight: 700;
+            letter-spacing: .04em;
+            margin-bottom: 1.4rem
+        }
+
+        .prs {
+            display: flex;
+            flex-direction: column;
+            gap: .6rem
+        }
+
+        .pi {
+            display: flex;
+            align-items: center;
+            gap: .65rem;
+            font-size: .8rem;
+            color: var(--mid)
+        }
+
+        .pi-ic {
+            width: 30px;
+            height: 30px;
+            border-radius: 8px;
+            background: rgba(0, 212, 255, .06);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: .82rem;
+            flex-shrink: 0
+        }
+
+        .phr {
+            border: none;
+            border-top: 1px solid var(--border);
+            margin: 1.4rem 0
+        }
+
+        .ptgs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: .4rem
+        }
+
+        .ptg {
+            background: rgba(0, 212, 255, .07);
+            border: 1px solid rgba(0, 212, 255, .15);
+            color: var(--ink2);
+            padding: .25rem .7rem;
+            border-radius: 6px;
+            font-size: .67rem;
+            font-weight: 700;
+            letter-spacing: .04em
+        }
+
+        .ptg.f {
+            background: rgba(0, 255, 170, .08);
+            border-color: rgba(0, 255, 170, .2);
+            color: var(--teal)
+        }
+
+        .abt h3 {
+            font-family: var(--font-d);
+            font-weight: 700;
+            font-size: 1.05rem;
+            color: var(--ink);
+            margin: 2.5rem 0 .8rem;
+            display: flex;
+            align-items: center;
+            gap: .6rem
+        }
+
+        .abt h3:first-child {
+            margin-top: 0
+        }
+
+        .abt h3::before {
+            content: '';
+            width: 18px;
+            height: 1.5px;
+            background: var(--ember)
+        }
+
+        .abt p {
+            color: var(--mid);
+            font-size: .9rem;
+            line-height: 1.9;
+            margin-bottom: 1rem
+        }
+
+        .abt p strong {
+            color: var(--ink);
+            font-weight: 600
+        }
+
+        .sg {
+            margin-bottom: 1.8rem
+        }
+
+        .sgl {
+            font-size: .65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .12em;
+            color: var(--soft);
+            margin-bottom: .6rem;
+            display: flex;
+            align-items: center;
+            gap: .5rem
+        }
+
+        .sgl::before {
+            content: '';
+            width: 14px;
+            height: 1px;
+            background: var(--soft)
+        }
+
+        .sps {
+            display: flex;
+            flex-wrap: wrap;
+            gap: .4rem
+        }
+
+        .sp {
+            background: var(--card);
+            border: 1px solid var(--border);
+            color: var(--ink2);
+            padding: .35rem .9rem;
+            border-radius: 50px;
+            font-size: .77rem;
+            font-weight: 500;
+            transition: all .22s;
+            cursor: default
+        }
+
+        .sp:hover {
+            background: rgba(0, 212, 255, .1);
+            color: var(--ember);
+            border-color: rgba(0, 212, 255, .3);
+            transform: translateY(-2px)
+        }
+
+        /* EXPERIENCE */
+        #experiencia {
+            background: var(--cream)
+        }
+
+        .eig {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            margin-bottom: 5rem;
+            align-items: end
+        }
+
+        .btl {
+            position: relative
+        }
+
+        .bti {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 0;
+            margin-bottom: 3px;
+            position: relative
+        }
+
+        .btlf {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-right: 2.5rem;
+            padding-top: .6rem
+        }
+
+        .btd {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--cream);
+            border: 2.5px solid var(--ember);
+            flex-shrink: 0;
+            transition: all .3s
+        }
+
+        .bti:hover .btd {
+            background: var(--ember);
+            box-shadow: 0 0 0 5px rgba(0, 212, 255, .12)
+        }
+
+        .btln {
+            flex: 1;
+            width: 1.5px;
+            background: linear-gradient(to bottom, rgba(0, 212, 255, .4), rgba(0, 212, 255, .1));
+            margin-top: 4px
+        }
+
+        .bti:last-child .btln {
+            display: none
+        }
+
+        .btc {
+            background: var(--card);
+            border: 1.5px solid var(--border);
+            border-radius: 20px;
+            padding: 2.2rem 2.5rem;
+            margin-bottom: 2rem;
+            transition: all .3s;
+            position: relative;
+            overflow: hidden
+        }
+
+        .btc::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(to bottom, var(--ember), var(--gold));
+            border-radius: 4px 0 0 4px;
+            transform: scaleY(0);
+            transform-origin: top;
+            transition: transform .4s
+        }
+
+        .bti:hover .btc {
+            border-color: rgba(0, 212, 255, .25);
+            box-shadow: 0 16px 50px rgba(0, 0, 0, .4);
+            transform: translateX(8px)
+        }
+
+        .bti:hover .btc::before {
+            transform: scaleY(1)
+        }
+
+        .btct {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: .8rem;
+            margin-bottom: 1.2rem
+        }
+
+        .btr {
+            font-family: var(--font-d);
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--ink);
+            margin-bottom: .25rem
+        }
+
+        .btco {
+            color: var(--ember);
+            font-size: .82rem;
+            font-weight: 700;
+            letter-spacing: .03em
+        }
+
+        .btbr {
+            display: flex;
+            gap: .5rem;
+            flex-wrap: wrap
+        }
+
+        .btdate {
+            background: rgba(0, 212, 255, .06);
+            border: 1px solid rgba(0, 212, 255, .14);
+            color: var(--mid);
+            padding: .28rem .9rem;
+            border-radius: 50px;
+            font-size: .68rem;
+            font-weight: 600;
+            letter-spacing: .06em;
+            font-family: var(--font-m)
+        }
+
+        .btcur {
+            background: rgba(0, 255, 170, .08);
+            border: 1px solid rgba(0, 255, 170, .2);
+            color: var(--teal);
+            padding: .28rem .9rem;
+            border-radius: 50px;
+            font-size: .68rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: .4rem
+        }
+
+        .btcur::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--teal2);
+            animation: sp 2s infinite
+        }
+
+        .btm {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            margin: 1.2rem 0;
+            padding: 1.2rem 1.5rem;
+            background: var(--cream2);
+            border-radius: 12px;
+            border: 1px solid var(--border2)
+        }
+
+        .btmn {
+            font-family: var(--font-d);
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--ember);
+            line-height: 1
+        }
+
+        .btml {
+            font-size: .62rem;
+            color: var(--soft);
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            margin-top: .15rem
+        }
+
+        .bttk {
+            display: flex;
+            flex-direction: column;
+            gap: .55rem;
+            margin-top: .8rem
+        }
+
+        .bttask {
+            display: flex;
+            align-items: flex-start;
+            gap: .8rem;
+            font-size: .86rem;
+            color: var(--mid);
+            line-height: 1.65
+        }
+
+        .btic {
+            width: 22px;
+            height: 22px;
+            border-radius: 6px;
+            background: rgba(0, 212, 255, .07);
+            border: 1px solid rgba(0, 212, 255, .14);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: .72rem;
+            flex-shrink: 0;
+            margin-top: .1rem
+        }
+
+        .bttech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: .35rem;
+            margin-top: 1.2rem;
+            padding-top: 1.2rem;
+            border-top: 1px solid var(--border2)
+        }
+
+        .btp {
+            background: rgba(0, 212, 255, .05);
+            border: 1px solid rgba(0, 212, 255, .12);
+            color: var(--ink2);
+            padding: .2rem .65rem;
+            border-radius: 5px;
+            font-size: .67rem;
+            font-weight: 600;
+            font-family: var(--font-m)
+        }
+
+        .edg {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 1.2rem;
+            margin-top: 2.5rem
+        }
+
+        .edc {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.6rem;
+            transition: all .3s;
+            position: relative;
+            overflow: hidden
+        }
+
+        .edc::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--ember), var(--gold));
+            transform: scaleX(0);
+            transition: transform .3s;
+            transform-origin: left
+        }
+
+        .edc:hover {
+            box-shadow: 0 8px 30px rgba(0, 0, 0, .3);
+            transform: translateY(-4px)
+        }
+
+        .edc:hover::after {
+            transform: scaleX(1)
+        }
+
+        .edyr {
+            font-size: .67rem;
+            font-weight: 700;
+            color: var(--ember);
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            font-family: var(--font-m);
+            margin-bottom: .5rem
+        }
+
+        .edtt {
+            font-family: var(--font-d);
+            font-weight: 700;
+            font-size: .95rem;
+            color: var(--ink);
+            margin-bottom: .35rem;
+            line-height: 1.3
+        }
+
+        .edin {
+            color: var(--soft);
+            font-size: .8rem
+        }
+
+        .edaw {
+            display: inline-flex;
+            align-items: center;
+            gap: .4rem;
+            margin-top: .8rem;
+            font-size: .72rem;
+            color: var(--gold2);
+            font-weight: 700
+        }
+
+        /* PROJECTS */
+        #proyectos {
+            background: var(--cream2)
+        }
+
+        .pmosaic {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 1.5rem
+        }
+
+        .pj {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 22px;
+            overflow: hidden;
+            transition: all .38s;
+            position: relative;
+            display: flex;
+            flex-direction: column
+        }
+
+        .pj:hover {
+            box-shadow: var(--shadow-deep);
+            transform: translateY(-8px);
+            border-color: rgba(232, 93, 38, .2)
+        }
+
+        .pj.pw {
+            grid-column: span 7
+        }
+
+        .pj.pn {
+            grid-column: span 5
+        }
+
+        .pj.ph2 {
+            grid-column: span 6
+        }
+
+        .pj.pt {
+            grid-column: span 4
+        }
+
+        .pthumb {
+            height: 190px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center
+        }
+
+        .pthc {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%
+        }
+
+        .pthi {
+            font-size: 3.8rem;
+            position: relative;
+            z-index: 2;
+            filter: drop-shadow(0 8px 24px rgba(0, 0, 0, .2));
+            transition: transform .4s
+        }
+
+        .pj:hover .pthi {
+            transform: scale(1.12) translateY(-6px)
+        }
+
+        .ptho {
+            position: absolute;
+            inset: 0;
+            z-index: 1
+        }
+
+        .pbody {
+            padding: 1.8rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column
+        }
+
+        .pjtags {
+            display: flex;
+            gap: .35rem;
+            flex-wrap: wrap;
+            margin-bottom: .8rem
+        }
+
+        .pjt {
+            font-size: .64rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .06em;
+            background: rgba(0, 212, 255, .08);
+            color: var(--ember);
+            padding: .2rem .6rem;
+            border-radius: 5px;
+            border: 1px solid rgba(0, 212, 255, .15);
+            font-family: var(--font-m)
+        }
+
+        .pjn {
+            font-family: var(--font-d);
+            font-weight: 700;
+            font-size: 1.05rem;
+            color: var(--ink);
+            margin-bottom: .6rem;
+            line-height: 1.25
+        }
+
+        .pjd {
+            color: var(--mid);
+            font-size: .84rem;
+            line-height: 1.75;
+            flex: 1
+        }
+
+        .pjdets {
+            display: flex;
+            flex-direction: column;
+            gap: .4rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border2)
+        }
+
+        .pjdet {
+            display: flex;
+            align-items: flex-start;
+            gap: .6rem;
+            font-size: .8rem;
+            color: var(--mid)
+        }
+
+        .pjdet::before {
+            content: '→';
+            color: var(--ember);
+            font-size: .75rem;
+            flex-shrink: 0;
+            margin-top: .05rem
+        }
+
+        .pjft {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1.2rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border2)
+        }
+
+        .pjimp {
+            display: flex;
+            gap: 1rem
+        }
+
+        .pjin {
+            font-family: var(--font-d);
+            font-weight: 900;
+            font-size: 1.1rem;
+            color: var(--ember)
+        }
+
+        .pjil {
+            font-size: .58rem;
+            color: var(--soft);
+            text-transform: uppercase;
+            letter-spacing: .07em
+        }
+
+        .pjcta {
+            font-size: .75rem;
+            color: var(--ember);
+            font-weight: 700;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: .3rem;
+            letter-spacing: .04em;
+            transition: gap .2s
+        }
+
+        .pjcta:hover {
+            gap: .6rem
+        }
+
+        /* SERVICES */
+        #servicios {
+            background: var(--cream)
+        }
+
+        .svgrid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+            gap: 1.4rem
+        }
+
+        .sv {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 2.2rem;
+            position: relative;
+            overflow: hidden;
+            transition: all .32s;
+            cursor: default
+        }
+
+        .sv::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 90% 10%, rgba(0, 212, 255, .04), transparent 55%);
+            opacity: 0;
+            transition: opacity .3s
+        }
+
+        .sv:hover {
+            box-shadow: var(--shadow-deep);
+            transform: translateY(-6px);
+            border-color: rgba(0, 212, 255, .2)
+        }
+
+        .sv:hover::after {
+            opacity: 1
+        }
+
+        .svnum {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.8rem;
+            font-family: var(--font-d);
+            font-size: 5rem;
+            font-weight: 900;
+            color: rgba(255, 255, 255, .03);
+            line-height: 1;
+            letter-spacing: -.05em;
+            transition: color .3s
+        }
+
+        .sv:hover .svnum {
+            color: rgba(0, 212, 255, .06)
+        }
+
+        .svic {
+            width: 56px;
+            height: 56px;
+            border-radius: 16px;
+            background: rgba(0, 212, 255, .07);
+            border: 1px solid rgba(0, 212, 255, .14);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: transform .3s, background .3s
+        }
+
+        .sv:hover .svic {
+            transform: scale(1.08);
+            background: rgba(0, 212, 255, .12)
+        }
+
+        .svn {
+            font-family: var(--font-d);
+            font-weight: 700;
+            font-size: 1.05rem;
+            color: var(--ink);
+            margin-bottom: .65rem
+        }
+
+        .svd {
+            color: var(--mid);
+            font-size: .84rem;
+            line-height: 1.8;
+            margin-bottom: 1.2rem
+        }
+
+        .svpls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: .35rem
+        }
+
+        .svp {
+            background: rgba(0, 212, 255, .05);
+            border: 1px solid rgba(0, 212, 255, .1);
+            color: var(--mid);
+            padding: .2rem .6rem;
+            border-radius: 5px;
+            font-size: .64rem;
+            font-weight: 600;
+            font-family: var(--font-m)
+        }
+
+        /* CONTACT */
+        #contacto {
+            background: var(--cream2)
+        }
+
+        .ctw {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6rem;
+            align-items: start
+        }
+
+        .cbig {
+            font-family: var(--font-d);
+            font-size: clamp(2rem, 4vw, 3.2rem);
+            font-weight: 900;
+            letter-spacing: -.03em;
+            line-height: 1.1;
+            color: var(--ink);
+            margin-bottom: 1rem
+        }
+
+        .cbig em {
+            font-style: italic;
+            font-weight: 300;
+            color: var(--mid)
+        }
+
+        .csub {
+            color: var(--mid);
+            font-size: .9rem;
+            line-height: 1.85;
+            margin-bottom: 2.5rem
+        }
+
+        .ccs {
+            display: flex;
+            flex-direction: column;
+            gap: .8rem
+        }
+
+        .cc {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            background: var(--card);
+            border: 1.5px solid var(--border);
+            border-radius: 14px;
+            padding: 1.1rem 1.5rem;
+            text-decoration: none;
+            transition: all .25s;
+            position: relative;
+            overflow: hidden
+        }
+
+        .cc::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: var(--ember);
+            transform: scaleY(0);
+            transition: transform .3s;
+            transform-origin: bottom
+        }
+
+        .cc:hover {
+            border-color: rgba(0, 212, 255, .25);
+            transform: translateX(6px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, .3)
+        }
+
+        .cc:hover::before {
+            transform: scaleY(1)
+        }
+
+        .cc-ic {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            background: rgba(0, 212, 255, .07);
+            border: 1px solid rgba(0, 212, 255, .12);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            flex-shrink: 0
+        }
+
+        .cc-lb {
+            font-size: .65rem;
+            color: var(--soft);
+            text-transform: uppercase;
+            letter-spacing: .1em;
+            font-family: var(--font-m);
+            margin-bottom: .2rem
+        }
+
+        .cc-v {
+            color: var(--ink);
+            font-size: .85rem;
+            font-weight: 600
+        }
+
+        .cform {
+            display: flex;
+            flex-direction: column;
+            gap: 1.1rem
+        }
+
+        .crow {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem
+        }
+
+        .cg {
+            display: flex;
+            flex-direction: column;
+            gap: .35rem
+        }
+
+        .cg label {
+            font-size: .65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .1em;
+            color: var(--soft)
+        }
+
+        .cg input,
+        .cg textarea,
+        .cg select {
+            background: var(--card);
+            border: 1.5px solid var(--border);
+            color: var(--ink);
+            border-radius: 10px;
+            padding: .88rem 1rem;
+            font-family: var(--font-b);
+            font-size: .88rem;
+            outline: none;
+            transition: border-color .2s, box-shadow .2s;
+            resize: vertical
+        }
+
+        .cg input::placeholder,
+        .cg textarea::placeholder {
+            color: var(--soft)
+        }
+
+        .cg input:focus,
+        .cg textarea:focus,
+        .cg select:focus {
+            border-color: var(--ember);
+            box-shadow: 0 0 0 3px rgba(0, 212, 255, .08)
+        }
+
+        .cg select option {
+            background: var(--card2)
+        }
+
+        .csbtn {
+            background: var(--ember);
+            color: #000;
+            border: none;
+            border-radius: 10px;
+            padding: 1rem 2.5rem;
+            font-family: var(--font-d);
+            font-weight: 700;
+            font-size: .95rem;
+            cursor: pointer;
+            transition: all .25s;
+            width: 100%;
+            letter-spacing: .04em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: .5rem
+        }
+
+        .csbtn:hover {
+            background: var(--ember2);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0, 212, 255, .3)
+        }
+
+        .csbtn.ok {
+            background: var(--teal);
+            color: #000
+        }
+
+        footer {
+            background: var(--cream2);
+            border-top: 1px solid var(--border);
+            padding: 3rem 6vw;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            position: relative;
+            overflow: hidden
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at 30% 50%, rgba(232, 93, 38, .05), transparent 60%)
+        }
+
+        .fbrand {
+            font-family: var(--font-d);
+            font-weight: 900;
+            font-size: 1.4rem;
+            color: var(--cream);
+            letter-spacing: -.02em;
+            position: relative;
+            z-index: 1
+        }
+
+        .fbrand span {
+            color: var(--ember)
+        }
+
+        footer p {
+            color: rgba(245, 240, 232, .4);
+            font-size: .78rem;
+            position: relative;
+            z-index: 1
+        }
+
+        footer a {
+            color: var(--ember);
+            text-decoration: none
+        }
+
+        .fls {
+            display: flex;
+            gap: 1.5rem;
+            position: relative;
+            z-index: 1
+        }
+
+        .fls a {
+            color: rgba(245, 240, 232, .45);
+            font-size: .78rem;
+            text-decoration: none;
+            transition: color .2s
+        }
+
+        .fls a:hover {
+            color: var(--cream)
+        }
+
+        .rev {
+            opacity: 0;
+            transform: translateY(32px);
+            transition: opacity .7s ease, transform .7s ease
+        }
+
+        .rev.show {
+            opacity: 1;
+            transform: translateY(0)
+        }
+
+        .rev.d1 {
+            transition-delay: .1s
+        }
+
+        .rev.d2 {
+            transition-delay: .2s
+        }
+
+        .rev.d3 {
+            transition-delay: .3s
+        }
+
+        @media(max-width:1080px) {
+            #hero {
+                grid-template-columns: 1fr;
+                gap: 3rem
+            }
+
+            .hr {
+                display: none
+            }
+
+            .ab-grid {
+                grid-template-columns: 1fr;
+                gap: 3rem
+            }
+
+            .ab-stk {
+                position: static
+            }
+
+            .eig {
+                grid-template-columns: 1fr
+            }
+
+            .ctw {
+                grid-template-columns: 1fr;
+                gap: 3rem
+            }
+
+            .crow {
+                grid-template-columns: 1fr
+            }
+
+            .nl {
+                display: none
+            }
+
+            .pj.pw,
+            .pj.pn,
+            .pj.ph2,
+            .pj.pt {
+                grid-column: span 12
+            }
+        }
+
+        @media(max-width:700px) {
+            .sec {
+                padding: 5rem 5vw
+            }
+
+            .svgrid {
+                grid-template-columns: 1fr
+            }
+
+            footer {
+                flex-direction: column;
+                text-align: center
+            }
+
+            .hsr {
+                flex-wrap: wrap
+            }
+        }
+    </style>
 </head>
+
 <body>
+    <div id="cur"></div>
+    <div id="cur-r"></div>
 
-<nav>
-  <a href="#inicio" class="nav-logo">Andy<span class="dot">.</span>dev</a>
-  <ul class="nav-links">
-    <li><a href="#sobre-mi">Sobre mí</a></li>
-    <li><a href="#experiencia">Experiencia</a></li>
-    <li><a href="#proyectos">Proyectos</a></li>
-    <li><a href="#servicios">Servicios</a></li>
-    <li><a href="#contacto">Contacto</a></li>
-  </ul>
-  <a href="mailto:Wilianlibra19@gmail.com" class="nav-cta">Contáctame</a>
-</nav>
+    <nav id="nav">
+        <a href="#hero" class="nb"><span class="nb-dot"></span><span class="nb-name">Andy Ramos</span></a>
+        <ul class="nl">
+            <li><a href="#sobre-mi">Sobre mí</a></li>
+            <li><a href="#experiencia">Experiencia</a></li>
+            <li><a href="#proyectos">Proyectos</a></li>
+            <li><a href="#servicios">Servicios</a></li>
+            <li><a href="#contacto">Contacto</a></li>
+        </ul>
+        <a href="mailto:Wilianlibra19@gmail.com" class="nhire">Contratarme →</a>
+    </nav>
 
-<section id="inicio">
-  <div class="hero-glow"></div>
-  <div class="hero-glow2"></div>
-  <div class="hero-inner">
-    <div class="hero-tag"><span class="blink"></span> Disponible para proyectos</div>
-    <h1>
-      Andy Wilian
-      <span class="name">Ramos Borda</span>
-      <span class="role">Full Stack Developer · ERP Integrator</span>
-    </h1>
-    <p class="hero-desc">
-      Bachiller en Ingeniería de Sistemas e Informática especializado en desarrollo web, 
-      APIs RESTful, integración SAP Business One y facturación electrónica SUNAT. 
-      Construyo soluciones tecnológicas que generan valor real.
-    </p>
-    <div class="hero-actions">
-      <a href="#proyectos" class="btn-primary">Ver mis proyectos →</a>
-      <a href="#contacto" class="btn-ghost">Hablemos</a>
-    </div>
-    <div class="hero-stats">
-      <div class="stat"><div class="stat-num">3</div><div class="stat-lbl">Empresas</div></div>
-      <div class="stat"><div class="stat-num">2+</div><div class="stat-lbl">Años exp.</div></div>
-      <div class="stat"><div class="stat-num">SAP</div><div class="stat-lbl">B1 Integration</div></div>
-      <div class="stat"><div class="stat-num">SUNAT</div><div class="stat-lbl">E-Factura</div></div>
-    </div>
-    <div class="hero-contact-bar">
-      <div class="contact-item"><span>📍</span> Santa Anita, Lima — Perú</div>
-      <div class="contact-item"><span>📧</span> Wilianlibra19@gmail.com</div>
-      <div class="contact-item"><span>📞</span> +51 982 257 569</div>
-    </div>
-  </div>
-</section>
-
-<section id="sobre-mi">
-  <div class="reveal">
-    <h2 class="section-title">Quién soy y qué <em>me mueve</em></h2>
-    <div class="section-line"></div>
-  </div>
-  <div class="about-grid">
-    <div class="about-card reveal">
-      <div class="about-card-top">
-        <div class="avatar-placeholder">👨‍💻</div>
-      </div>
-      <div class="about-card-body">
-        <div class="about-name">Andy Wilian Ramos Borda</div>
-        <div class="about-role">Full Stack Developer · ERP Integrator</div>
-        <div class="about-info-row"><span class="ico">📍</span> Santa Anita, Lima — Perú</div>
-        <div class="about-info-row"><span class="ico">🎓</span> Ing. Sistemas — U. Norbert Wiener</div>
-        <div class="about-info-row"><span class="ico">📞</span> +51 982 257 569</div>
-        <hr class="about-separator"/>
-        <div class="about-badge-row">
-          <span class="badge">SCRUM</span>
-          <span class="badge">MVC</span>
-          <span class="badge">REST APIs</span>
-          <span class="badge">SAP B1</span>
-          <span class="badge">Power BI</span>
+    <section id="hero">
+        <canvas id="hc"></canvas>
+        <div class="hbg1"></div>
+        <div class="hbg2"></div>
+        <div class="hl">
+            <div class="hst"><span class="hst-d"></span><span class="hst-t">Disponible para proyectos</span></div>
+            <h1 class="hh"><span class="l1">Andy Wilian</span><span class="l2">Ramos Borda</span><span class="l3">Full
+                    Stack · ERP · Mobile</span></h1>
+            <div class="htl"><span class="htl-ln"></span><span class="htl-t">Desarrollador · Lima, Perú</span></div>
+            <p class="hdesc">Bachiller en Ingeniería de Sistemas especializado en <strong>sistemas web
+                    empresariales</strong>, integración <strong>SAP Business One</strong>, <strong>facturación
+                    electrónica SUNAT</strong> y apps móviles. Construyo tecnología que genera valor real.</p>
+            <div class="hbtns">
+                <a href="#proyectos" class="bfire">Ver mis proyectos →</a>
+                <a href="CV_Andy_Ramos.pdf" download class="boutl">Descargar CV 📄</a>
+                <a href="#contacto" class="boutl">Hablemos 💬</a>
+            </div>
+            <div class="hcr">
+                <a href="mailto:Wilianlibra19@gmail.com" class="hci">✉ Wilianlibra19@gmail.com</a>
+                <a href="tel:+51982257569" class="hci">📞 +51 982 257 569</a>
+                <span class="hci">📍 Santa Anita, Lima</span>
+            </div>
+            <div class="hsr">
+                <div class="hs">
+                    <div class="hs-n">3</div>
+                    <div class="hs-l">Empresas</div>
+                </div>
+                <div class="hs">
+                    <div class="hs-n">2+</div>
+                    <div class="hs-l">Años exp.</div>
+                </div>
+                <div class="hs">
+                    <div class="hs-n">SAP</div>
+                    <div class="hs-l">B1 Integration</div>
+                </div>
+                <div class="hs">
+                    <div class="hs-n">8</div>
+                    <div class="hs-l">Proyectos</div>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-    <div class="about-text reveal">
-      <h3>Mi perfil</h3>
-      <p>Bachiller en Ingeniería de Sistemas e Informática con sólida formación académica y experiencia práctica en desarrollo de software, análisis de datos y administración de sistemas. Capaz de diseñar, implementar y mantener soluciones tecnológicas orientadas a resultados.</p>
-      <p>Manejo de metodologías ágiles, orientación a la calidad del código y experiencia en sistemas ERP, desarrollo web y escritorio. Comprometido con la mejora continua y el trabajo en equipo.</p>
-
-      <h3>Habilidades técnicas</h3>
-      <div class="skills-category">
-        <div class="skills-cat-title">Lenguajes de programación</div>
-        <div class="skills-row">
-          <span class="skill-tag">C# / .NET</span><span class="skill-tag">PHP (POO)</span>
-          <span class="skill-tag">JavaScript</span><span class="skill-tag">TypeScript</span>
-          <span class="skill-tag">Dart / Flutter</span>
-          <span class="skill-tag">HTML5 / CSS3</span><span class="skill-tag">SQL</span>
+        <div class="hr">
+            <div class="hscene">
+                <div class="hsi">
+                    <div class="hcm">
+                        <div style="display:flex;align-items:center;gap:1rem">
+                            <div class="hav-ring">
+                                <div class="hav-in"><img src="andy.jpg" alt="Andy Ramos" style="width:100%;height:100%;object-fit:cover;border-radius:50%"></div>
+                            </div>
+                            <div>
+                                <div class="hcn">Andy W. Ramos B.</div>
+                                <div class="hcrl">Full Stack Developer</div>
+                            </div>
+                        </div>
+                        <div class="hdiv"></div>
+                        <div class="hcss">
+                            <div class="hcs">
+                                <div class="hcs-n">3</div>
+                                <div class="hcs-l">Empresas</div>
+                            </div>
+                            <div class="hcs">
+                                <div class="hcs-n">2+</div>
+                                <div class="hcs-l">Años</div>
+                            </div>
+                            <div class="hcs">
+                                <div class="hcs-n">8</div>
+                                <div class="hcs-l">Proyectos</div>
+                            </div>
+                        </div>
+                        <div class="hdiv"></div>
+                        <div class="hil">
+                            <div class="hi">
+                                <div class="hi-ic">📍</div>Santa Anita, Lima — Perú
+                            </div>
+                            <div class="hi">
+                                <div class="hi-ic">🎓</div>Ing. Sistemas — U. Norbert Wiener
+                            </div>
+                            <div class="hi">
+                                <div class="hi-ic">✉️</div>Wilianlibra19@gmail.com
+                            </div>
+                        </div>
+                        <div class="hdiv"></div>
+                        <div class="htr">
+                            <span class="ht">C# · .NET</span><span class="ht">PHP</span><span class="ht">SAP
+                                B1</span><span class="ht">Flutter</span><span class="ht">SQL Server</span><span
+                                class="ht">Power BI</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="fchip c1"><span class="cd e"></span>SAP B1 Live</div>
+                <div class="fchip c2"><span class="cd t"></span>SUNAT ✓</div>
+                <div class="fchip c3"><span class="cd g"></span>Power BI</div>
+            </div>
         </div>
-      </div>
-      <div class="skills-category">
-        <div class="skills-cat-title">Frameworks & Librerías</div>
-        <div class="skills-row">
-          <span class="skill-tag">ASP.NET MVC</span><span class="skill-tag">.NET Core</span>
-          <span class="skill-tag">Flutter</span>
-          <span class="skill-tag">Bootstrap 5</span><span class="skill-tag">Angular</span>
-          <span class="skill-tag">Entity Framework</span><span class="skill-tag">jQuery</span>
+        <div class="scue"><span class="scue-t">Scroll</span>
+            <div class="scue-l"></div>
         </div>
-      </div>
-      <div class="skills-category">
-        <div class="skills-cat-title">Bases de datos</div>
-        <div class="skills-row">
-          <span class="skill-tag">SQL Server</span><span class="skill-tag">MySQL</span>
-          <span class="skill-tag">PostgreSQL</span><span class="skill-tag">Firebase / Firestore</span>
-          <span class="skill-tag">Stored Procedures</span>
-          <span class="skill-tag">Triggers</span>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="sobre-mi" class="sec">
+        <div class="rev">
+            <div class="ey">Perfil</div>
+            <h2 class="st">Quién soy y qué <em>me mueve</em></h2>
+            <div class="sln"></div>
         </div>
-      </div>
-      <div class="skills-category">
-        <div class="skills-cat-title">ERP & Herramientas</div>
-        <div class="skills-row">
-          <span class="skill-tag">SAP Business One</span><span class="skill-tag">Power BI</span>
-          <span class="skill-tag">Odoo</span><span class="skill-tag">Postman</span>
-          <span class="skill-tag">Swagger</span><span class="skill-tag">Figma</span>
+        <div class="ab-grid">
+            <div class="ab-stk rev">
+                <div class="pcard">
+                    <div class="ph">
+                        <div class="go"></div>
+                        <div class="g1"></div>
+                        <div class="g2"></div>
+                        <div class="pavi"><img src="andy.jpg" alt="Andy Ramos" style="width:100%;height:100%;object-fit:cover;border-radius:50%"></div>
+                    </div>
+                    <div class="pb">
+                        <div class="pn">Andy Wilian Ramos Borda</div>
+                        <div class="pr">Full Stack Developer · ERP Integrator</div>
+                        <div class="prs">
+                            <div class="pi">
+                                <div class="pi-ic">📍</div>Santa Anita, Lima — Perú
+                            </div>
+                            <div class="pi">
+                                <div class="pi-ic">🎓</div>Ing. Sistemas — U. Norbert Wiener
+                            </div>
+                            <div class="pi">
+                                <div class="pi-ic">📞</div>+51 982 257 569
+                            </div>
+                            <div class="pi">
+                                <div class="pi-ic">✉️</div>Wilianlibra19@gmail.com
+                            </div>
+                        </div>
+                        <hr class="phr" />
+                        <div class="ptgs">
+                            <span class="ptg f">● Disponible</span><span class="ptg">SCRUM</span><span
+                                class="ptg">MVC</span><span class="ptg">SAP B1</span><span class="ptg">Power BI</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="abt rev d1">
+                <h3>Mi perfil</h3>
+                <p>Bachiller en Ingeniería de Sistemas e Informática con <strong>sólida formación académica</strong> y
+                    experiencia práctica en desarrollo de software, análisis de datos y administración de sistemas.
+                    Capaz de diseñar, implementar y mantener <strong>soluciones tecnológicas orientadas a
+                        resultados</strong> reales para empresas peruanas.</p>
+                <p>Manejo metodologías ágiles SCRUM, orientado a la calidad del código y con experiencia demostrada en
+                    sistemas ERP, desarrollo web full stack, desktop y móvil. <strong>Comprometido con la mejora
+                        continua</strong> y el trabajo colaborativo.</p>
+                <h3>Habilidades técnicas</h3>
+                <div class="sg">
+                    <div class="sgl">Lenguajes</div>
+                    <div class="sps"><span class="sp">C# / .NET</span><span class="sp">PHP (POO)</span><span
+                            class="sp">JavaScript</span><span class="sp">TypeScript</span><span
+                            class="sp">Dart/Flutter</span><span class="sp">HTML5/CSS3</span><span class="sp">SQL</span>
+                    </div>
+                </div>
+                <div class="sg">
+                    <div class="sgl">Frameworks</div>
+                    <div class="sps"><span class="sp">ASP.NET MVC</span><span class="sp">.NET Core</span><span
+                            class="sp">Flutter</span><span class="sp">Bootstrap 5</span><span
+                            class="sp">Angular</span><span class="sp">Entity Framework</span><span
+                            class="sp">jQuery</span></div>
+                </div>
+                <div class="sg">
+                    <div class="sgl">Bases de datos</div>
+                    <div class="sps"><span class="sp">SQL Server</span><span class="sp">MySQL</span><span
+                            class="sp">PostgreSQL</span><span class="sp">Firebase/Firestore</span><span
+                            class="sp">Stored Procedures</span><span class="sp">Triggers</span></div>
+                </div>
+                <div class="sg">
+                    <div class="sgl">ERP & Herramientas</div>
+                    <div class="sps"><span class="sp">SAP Business One</span><span class="sp">Power BI</span><span
+                            class="sp">Odoo</span><span class="sp">Postman</span><span class="sp">Swagger</span><span
+                            class="sp">Figma</span></div>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
+    </section>
 
-<section id="experiencia">
-  <div class="reveal">
-    <h2 class="section-title">Trayectoria <em>profesional</em></h2>
-    <div class="section-line"></div>
-  </div>
-  <div class="timeline">
-    <div class="timeline-item reveal">
-      <div class="tl-dot"></div>
-      <div class="tl-content">
-        <div class="tl-meta">
-          <div><div class="tl-role">Desarrollador Full Stack</div><div class="tl-company">Inversiones Medical S.A.C</div></div>
-          <div class="tl-date">Mar 2025 — Actualidad</div>
+    <!-- EXPERIENCE -->
+    <section id="experiencia" class="sec">
+        <div class="eig rev">
+            <div>
+                <div class="ey">Experiencia</div>
+                <h2 class="st">Trayectoria <em>profesional</em></h2>
+                <div class="sln"></div>
+            </div>
+            <p style="color:var(--mid);font-size:.9rem;line-height:1.9;align-self:end">Más de 2 años en empresas reales
+                de Lima resolviendo problemas complejos con tecnología bien aplicada.</p>
         </div>
-        <div class="tl-desc">
-          <ul>
-            <li>Diseño y construcción de sistemas web personalizados para gestión interna con PHP (POO), HTML5, CSS3, JavaScript y Bootstrap.</li>
-            <li>Implementación de sistemas de control de acceso por roles con seguridad lógica para mostrar/ocultar funcionalidades.</li>
-            <li>Creación y consumo de Web APIs en .NET Core conectadas a SQL Server para alimentar dashboards y formularios dinámicos.</li>
-            <li>Automatización de reportes con Power BI integrando Excel, SAP Business One y SQL Server.</li>
-            <li>Integración con SAP Business One para consultas de precios, actualización de stock y sincronización con el sistema web.</li>
-          </ul>
+        <div class="btl">
+            <div class="bti rev">
+                <div class="btlf">
+                    <div class="btd"></div>
+                    <div class="btln"></div>
+                </div>
+                <div class="btc">
+                    <div class="btct">
+                        <div>
+                            <div class="btr">Desarrollador Full Stack</div>
+                            <div class="btco">Inversiones Medical S.A.C</div>
+                        </div>
+                        <div class="btbr"><span class="btcur">Posición actual</span><span class="btdate">Mar 2025 —
+                                Actualidad</span></div>
+                    </div>
+                    <div class="btm">
+                        <div>
+                            <div class="btmn">5+</div>
+                            <div class="btml">Módulos web</div>
+                        </div>
+                        <div>
+                            <div class="btmn">3</div>
+                            <div class="btml">Roles acceso</div>
+                        </div>
+                        <div>
+                            <div class="btmn">SAP</div>
+                            <div class="btml">B1 integrado</div>
+                        </div>
+                        <div>
+                            <div class="btmn">Power BI</div>
+                            <div class="btml">Dashboards auto</div>
+                        </div>
+                    </div>
+                    <div class="bttk">
+                        <div class="bttask">
+                            <div class="btic">🌐</div>Diseño y construcción de sistemas web personalizados con PHP
+                            (POO), HTML5, CSS3, JavaScript y Bootstrap para gestión interna empresarial multiusuario con
+                            alta disponibilidad.
+                        </div>
+                        <div class="bttask">
+                            <div class="btic">🔐</div>Sistema de control de acceso por roles con seguridad lógica
+                            granular: cada perfil ve y ejecuta solo las funcionalidades autorizadas, con auditoría de
+                            acciones por usuario.
+                        </div>
+                        <div class="bttask">
+                            <div class="btic">⚡</div>Web APIs en .NET Core conectadas a SQL Server para dashboards
+                            dinámicos y formularios con datos en tiempo real, con documentación Swagger y autenticación
+                            JWT.
+                        </div>
+                        <div class="bttask">
+                            <div class="btic">📊</div>Automatización de reportes gerenciales en Power BI integrando
+                            Excel, SAP Business One y SQL Server con modelos de datos complejos, DAX avanzado y
+                            actualización programada.
+                        </div>
+                        <div class="bttask">
+                            <div class="btic">🔗</div>Integración bidireccional con SAP Business One: consultas de
+                            precios, actualización de stock y sincronización automática con el sistema web propio en
+                            tiempo real.
+                        </div>
+                    </div>
+                    <div class="bttech"><span class="btp">PHP POO</span><span class="btp">.NET Core</span><span
+                            class="btp">SQL Server</span><span class="btp">SAP B1</span><span class="btp">Power
+                            BI</span><span class="btp">Bootstrap 5</span><span class="btp">JavaScript</span><span
+                            class="btp">DAX</span></div>
+                </div>
+            </div>
+            <div class="bti rev d1">
+                <div class="btlf">
+                    <div class="btd"></div>
+                    <div class="btln"></div>
+                </div>
+                <div class="btc">
+                    <div class="btct">
+                        <div>
+                            <div class="btr">Desarrollador Backend & Integraciones</div>
+                            <div class="btco">Corporación Computer System Solution</div>
+                        </div>
+                        <div class="btbr"><span class="btdate">Ago — Oct 2024</span></div>
+                    </div>
+                    <div class="btm">
+                        <div>
+                            <div class="btmn">1</div>
+                            <div class="btml">Sistema inventario</div>
+                        </div>
+                        <div>
+                            <div class="btmn">APIs</div>
+                            <div class="btml">REST documentadas</div>
+                        </div>
+                        <div>
+                            <div class="btmn">SUNAT</div>
+                            <div class="btml">E-facturación</div>
+                        </div>
+                        <div>
+                            <div class="btmn">TCP</div>
+                            <div class="btml">Sockets externos</div>
+                        </div>
+                    </div>
+                    <div class="bttk">
+                        <div class="bttask">
+                            <div class="btic">📦</div>Sistema de control de inventarios multiusuario: gestión de stock
+                            en tiempo real, historial de movimientos con trazabilidad completa y alertas automáticas de
+                            reposición por umbral configurable.
+                        </div>
+                        <div class="bttask">
+                            <div class="btic">🔌</div>APIs RESTful documentadas con Swagger, validadas con Postman,
+                            autenticación JWT y manejo estructurado de errores con logging detallado de cada operación.
+                        </div>
+                        <div class="bttask">
+                            <div class="btic">🌐</div>Conexión a servidores externos mediante sockets TCP y REST con
+                            manejo de reconexión automática, reintentos configurables y registro de eventos en tiempo
+                            real.
+                        </div>
+                        <div class="bttask">
+                            <div class="btic">🧾</div>Módulo de facturación electrónica SUNAT: XML UBL 2.1, envío a OSE,
+                            recepción de CDR, manejo de estados y registro automático. Facturas, boletas y notas de
+                            crédito/débito.
+                        </div>
+                    </div>
+                    <div class="bttech"><span class="btp">C#</span><span class="btp">.NET Core</span><span
+                            class="btp">SQL Server</span><span class="btp">Swagger</span><span
+                            class="btp">Postman</span><span class="btp">JWT</span><span class="btp">Sockets
+                            TCP</span><span class="btp">XML UBL 2.1</span></div>
+                </div>
+            </div>
+            <div class="bti rev d2">
+                <div class="btlf">
+                    <div class="btd"></div>
+                    <div class="btln"></div>
+                </div>
+                <div class="btc">
+                    <div class="btct">
+                        <div>
+                            <div class="btr">Programador de Escritorio</div>
+                            <div class="btco">Accenti S.A.C</div>
+                        </div>
+                        <div class="btbr"><span class="btdate">Feb — Abr 2024</span></div>
+                    </div>
+                    <div class="btm">
+                        <div>
+                            <div class="btmn">FoxPro</div>
+                            <div class="btml">→ C# migrado</div>
+                        </div>
+                        <div>
+                            <div class="btmn">WinForms</div>
+                            <div class="btml">Modernización</div>
+                        </div>
+                        <div>
+                            <div class="btmn">SCRUM</div>
+                            <div class="btml">Sprints ágiles</div>
+                        </div>
+                        <div>
+                            <div class="btmn">SQL</div>
+                            <div class="btml">Optimizado</div>
+                        </div>
+                    </div>
+                    <div class="bttk">
+                        <div class="bttask">
+                            <div class="btic">🔄</div>Migración completa de sistemas legados críticos desde FoxPro a C#
+                            con Windows Forms, aplicando patrones Repository y Singleton para código mantenible,
+                            testeable y escalable.
+                        </div>
+                        <div class="bttask">
+                            <div class="btic">🔧</div>Refactorización profunda: eliminación de redundancias, extracción
+                            de módulos, mejora de rendimiento en operaciones críticas con alta carga de datos
+                            frecuentes.
+                        </div>
+                        <div class="bttask">
+                            <div class="btic">🗄️</div>Optimización de SQL Server: stored procedures de alto
+                            rendimiento, índices bien colocados y análisis de planes de ejecución para consultas masivas
+                            en producción.
+                        </div>
+                        <div class="bttask">
+                            <div class="btic">📋</div>SCRUM riguroso: sprints de 2 semanas, daily meetings, historias de
+                            usuario con criterios de aceptación y entregas continuas revisadas con el cliente.
+                        </div>
+                    </div>
+                    <div class="bttech"><span class="btp">C#</span><span class="btp">WinForms</span><span
+                            class="btp">SQL Server</span><span class="btp">Repository Pattern</span><span
+                            class="btp">Singleton</span><span class="btp">SCRUM</span></div>
+                </div>
+            </div>
         </div>
-        <span class="tl-current">● Posición actual</span>
-      </div>
-    </div>
-    <div class="timeline-item reveal">
-      <div class="tl-dot"></div>
-      <div class="tl-content">
-        <div class="tl-meta">
-          <div><div class="tl-role">Desarrollador Backend y de Integraciones</div><div class="tl-company">Corporación Computer System Solution</div></div>
-          <div class="tl-date">Ago — Oct 2024</div>
+        <div style="margin-top:5rem">
+            <div class="rev">
+                <div class="ey">Formación</div>
+                <h3 class="st" style="font-size:clamp(1.8rem,3vw,2.5rem)">Educación & <em>Certificaciones</em></h3>
+                <div class="sln"></div>
+            </div>
+            <div class="edg">
+                <div class="edc rev">
+                    <div class="edyr">2018 — 2023</div>
+                    <div class="edtt">Bachiller en Ingeniería de Sistemas e Informática</div>
+                    <div class="edin">Universidad Privada Norbert Wiener</div>
+                </div>
+                <div class="edc rev d1">
+                    <div class="edyr">2017 — 2018</div>
+                    <div class="edtt">Técnico en Computación e Informática</div>
+                    <div class="edin">Instituto Norbert Wiener</div>
+                </div>
+                <div class="edc rev d2">
+                    <div class="edyr">Julio 2020</div>
+                    <div class="edtt">Ekoparty University Talks Perú 2020</div>
+                    <div class="edin">Ekoparty · Bsides Perú · UPC · CySecByWomen — 6h</div>
+                </div>
+                <div class="edc rev d3">
+                    <div class="edyr">Nov 2020</div>
+                    <div class="edtt">Diseño y Prototipos de Entornos Virtuales</div>
+                    <div class="edin">Feria Tecnológica 2020 · U. Norbert Wiener</div>
+                    <div class="edaw">🥇 1.er Puesto — EAP de Ingenierías</div>
+                </div>
+            </div>
         </div>
-        <div class="tl-desc">
-          <ul>
-            <li>Desarrollo de sistema de control de inventarios multiusuario con gestión de stock, movimientos, historial y alertas de reposición.</li>
-            <li>Diseño y consumo de APIs RESTful con Postman, Swagger y pruebas automatizadas.</li>
-            <li>Conexión a servidores externos mediante sockets y REST para intercambio de datos con entidades externas.</li>
-            <li>Desarrollo de scripts para facturación electrónica SUNAT en formatos XML/JSON según requerimientos normativos.</li>
-            <li>Validación y registro automático de comprobantes electrónicos en servidores seguros.</li>
-          </ul>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="proyectos" class="sec">
+        <div class="rev">
+            <div class="ey">Proyectos</div>
+            <h2 class="st">Lo que he <em>construido</em></h2>
+            <p class="sd">Cada proyecto resuelve un problema real con tecnología bien aplicada. Acá el detalle técnico
+                de cada uno.</p>
+            <div class="sln"></div>
         </div>
-      </div>
-    </div>
-    <div class="timeline-item reveal">
-      <div class="tl-dot"></div>
-      <div class="tl-content">
-        <div class="tl-meta">
-          <div><div class="tl-role">Programador de Escritorio</div><div class="tl-company">Accenti S.A.C</div></div>
-          <div class="tl-date">Feb — Abr 2024</div>
+        <div class="pmosaic">
+            <div class="pj pw rev">
+                <div class="pthumb" style="background:linear-gradient(135deg,#fdf4e8,#f5e8cc)">
+                    <canvas class="pthc" data-color="232,93,38"></canvas>
+                    <div class="pthi">🏥</div>
+                    <div class="ptho" style="background:linear-gradient(to bottom,transparent 50%,#fff9f0)"></div>
+                </div>
+                <div class="pbody">
+                    <div class="pjtags"><span class="pjt">PHP</span><span class="pjt">MySQL</span><span
+                            class="pjt">Bootstrap</span><span class="pjt">SAP B1</span><span class="pjt">.NET
+                            Core</span></div>
+                    <div class="pjn">Sistema de Gestión Web — Inversiones Medical S.A.C</div>
+                    <p class="pjd">Sistema web empresarial completo con módulos de gestión interna, control de acceso y
+                        reportería automatizada integrado con SAP Business One.</p>
+                    <div class="pjdets">
+                        <div class="pjdet">Control de acceso granular por roles (admin, supervisor, operador) con
+                            seguridad lógica en endpoints y vistas.</div>
+                        <div class="pjdet">Dashboards en tiempo real y reportes Power BI embebidos conectando SAP, SQL
+                            Server y Excel en modelo unificado.</div>
+                        <div class="pjdet">Integración SAP B1: precios de lista, stock y transacciones sincronizadas
+                            automáticamente con el sistema web.</div>
+                    </div>
+                    <div class="pjft">
+                        <div class="pjimp">
+                            <div>
+                                <div class="pjin">5+</div>
+                                <div class="pjil">Módulos</div>
+                            </div>
+                            <div>
+                                <div class="pjin">3</div>
+                                <div class="pjil">Roles</div>
+                            </div>
+                            <div>
+                                <div class="pjin">Real-time</div>
+                                <div class="pjil">SAP sync</div>
+                            </div>
+                        </div>
+                        <a href="#contacto" class="pjcta">Consultar →</a>
+                    </div>
+                </div>
+            </div>
+            <div class="pj pn rev d1">
+                <div class="pthumb" style="background:linear-gradient(135deg,#e8f4f0,#cce8e2)">
+                    <canvas class="pthc" data-color="26,122,110"></canvas>
+                    <div class="pthi">🧾</div>
+                    <div class="ptho" style="background:linear-gradient(to bottom,transparent 50%,#fff9f0)"></div>
+                </div>
+                <div class="pbody">
+                    <div class="pjtags"><span class="pjt">C#</span><span class="pjt">SUNAT</span><span class="pjt">XML
+                            UBL 2.1</span><span class="pjt">REST</span></div>
+                    <div class="pjn">Facturación Electrónica SUNAT</div>
+                    <p class="pjd">Módulo completo de e-facturación para empresas peruanas conforme a normativa SUNAT
+                        vigente.</p>
+                    <div class="pjdets">
+                        <div class="pjdet">Facturas, boletas y notas de crédito en formato XML UBL 2.1 firmado
+                            digitalmente.</div>
+                        <div class="pjdet">Envío automático a OSE, recepción de CDR y gestión de estados con reintentos.
+                        </div>
+                    </div>
+                    <div class="pjft">
+                        <div class="pjimp">
+                            <div>
+                                <div class="pjin">UBL 2.1</div>
+                                <div class="pjil">Estándar</div>
+                            </div>
+                            <div>
+                                <div class="pjin">CDR</div>
+                                <div class="pjil">Automático</div>
+                            </div>
+                        </div>
+                        <a href="#contacto" class="pjcta">Consultar →</a>
+                    </div>
+                </div>
+            </div>
+            <div class="pj ph2 rev">
+                <div class="pthumb" style="background:linear-gradient(135deg,#f0eaf8,#e2d4f0)">
+                    <canvas class="pthc" data-color="120,80,180"></canvas>
+                    <div class="pthi">📦</div>
+                    <div class="ptho" style="background:linear-gradient(to bottom,transparent 50%,#fff9f0)"></div>
+                </div>
+                <div class="pbody">
+                    <div class="pjtags"><span class="pjt">.NET Core</span><span class="pjt">SQL Server</span><span
+                            class="pjt">REST API</span><span class="pjt">Swagger</span></div>
+                    <div class="pjn">Control de Inventarios Multiusuario</div>
+                    <p class="pjd">Backend robusto para inventario con APIs documentadas, alertas automáticas y
+                        trazabilidad completa por usuario.</p>
+                    <div class="pjdets">
+                        <div class="pjdet">Stock en tiempo real con movimientos, historial y alertas por umbral
+                            configurable.</div>
+                        <div class="pjdet">APIs REST documentadas en Swagger con colección Postman lista para
+                            integración.</div>
+                    </div>
+                    <div class="pjft">
+                        <div class="pjimp">
+                            <div>
+                                <div class="pjin">APIs</div>
+                                <div class="pjil">Documentadas</div>
+                            </div>
+                            <div>
+                                <div class="pjin">Multi</div>
+                                <div class="pjil">Usuario</div>
+                            </div>
+                        </div>
+                        <a href="#contacto" class="pjcta">Consultar →</a>
+                    </div>
+                </div>
+            </div>
+            <div class="pj ph2 rev d1">
+                <div class="pthumb" style="background:linear-gradient(135deg,#fceee0,#f8ddc4)">
+                    <canvas class="pthc" data-color="201,146,42"></canvas>
+                    <div class="pthi">📊</div>
+                    <div class="ptho" style="background:linear-gradient(to bottom,transparent 50%,#fff9f0)"></div>
+                </div>
+                <div class="pbody">
+                    <div class="pjtags"><span class="pjt">Power BI</span><span class="pjt">SAP</span><span
+                            class="pjt">DAX</span><span class="pjt">Excel</span></div>
+                    <div class="pjn">Dashboard Ejecutivo Power BI</div>
+                    <p class="pjd">Reportes gerenciales que unifican SAP Business One, SQL Server y Excel en modelo
+                        único con KPIs accionables.</p>
+                    <div class="pjdets">
+                        <div class="pjdet">DAX avanzado, drill-down por categoría, sucursal y período con alertas
+                            visuales automáticas.</div>
+                    </div>
+                    <div class="pjft">
+                        <div class="pjimp">
+                            <div>
+                                <div class="pjin">3</div>
+                                <div class="pjil">Fuentes datos</div>
+                            </div>
+                            <div>
+                                <div class="pjin">DAX</div>
+                                <div class="pjil">Avanzado</div>
+                            </div>
+                        </div>
+                        <a href="#contacto" class="pjcta">Consultar →</a>
+                    </div>
+                </div>
+            </div>
+            <div class="pj pt rev">
+                <div class="pthumb" style="background:linear-gradient(135deg,#e8f0f8,#ccddf0)">
+                    <canvas class="pthc" data-color="38,100,200"></canvas>
+                    <div class="pthi">🖥️</div>
+                    <div class="ptho" style="background:linear-gradient(to bottom,transparent 50%,#fff9f0)"></div>
+                </div>
+                <div class="pbody">
+                    <div class="pjtags"><span class="pjt">C#</span><span class="pjt">WinForms</span><span
+                            class="pjt">SQL Server</span></div>
+                    <div class="pjn">Migración FoxPro → C# WinForms</div>
+                    <p class="pjd">Modernización de sistema legacy crítico con patrones Repository y Singleton.
+                        Rendimiento optimizado con stored procedures.</p>
+                    <div class="pjft">
+                        <div class="pjimp">
+                            <div>
+                                <div class="pjin">Legacy</div>
+                                <div class="pjil">Modernizado</div>
+                            </div>
+                        </div>
+                        <a href="#contacto" class="pjcta">Consultar →</a>
+                    </div>
+                </div>
+            </div>
+            <div class="pj pt rev d1">
+                <div class="pthumb" style="background:linear-gradient(135deg,#f0f8e8,#d4f0c4)">
+                    <canvas class="pthc" data-color="60,160,60"></canvas>
+                    <div class="pthi">💼</div>
+                    <div class="ptho" style="background:linear-gradient(to bottom,transparent 50%,#fff9f0)"></div>
+                </div>
+                <div class="pbody">
+                    <div class="pjtags"><span class="pjt">Flutter</span><span class="pjt">Firebase</span><span
+                            class="pjt">Dart</span></div>
+                    <div class="pjn">LaboraYa — Empleos Temporales</div>
+                    <p class="pjd">App móvil estilo TaskRabbit: conecta clientes con trabajadores. Chat real,
+                        geolocalización y calificaciones.</p>
+                    <div class="pjft">
+                        <div class="pjimp">
+                            <div>
+                                <div class="pjin">iOS+Android</div>
+                                <div class="pjil">Multiplataforma</div>
+                            </div>
+                        </div>
+                        <a href="#contacto" class="pjcta">Ver más →</a>
+                    </div>
+                </div>
+            </div>
+            <div class="pj pt rev d2">
+                <div class="pthumb" style="background:linear-gradient(135deg,#f8e8f0,#f0c4d8)">
+                    <canvas class="pthc" data-color="180,60,120"></canvas>
+                    <div class="pthi">🏠</div>
+                    <div class="ptho" style="background:linear-gradient(to bottom,transparent 50%,#fff9f0)"></div>
+                </div>
+                <div class="pbody">
+                    <div class="pjtags"><span class="pjt">Flutter</span><span class="pjt">Firestore</span><span
+                            class="pjt">Maps</span></div>
+                    <div class="pjn">CuartoPE — Alquiler</div>
+                    <p class="pjd">Plataforma de alquiler con feed TikTok, chat, favoritos y soporte ES/EN/PT. Modo
+                        oscuro.</p>
+                    <div class="pjft">
+                        <div class="pjimp">
+                            <div>
+                                <div class="pjin">3</div>
+                                <div class="pjil">Idiomas</div>
+                            </div>
+                        </div>
+                        <a href="#contacto" class="pjcta">Ver más →</a>
+                    </div>
+                </div>
+            </div>
+            <div class="pj pw rev d1" style="grid-column:span 12">
+                <div class="pthumb" style="background:linear-gradient(135deg,#e8f0f0,#c4e0dc);height:150px">
+                    <canvas class="pthc" data-color="26,122,110"></canvas>
+                    <div class="pthi">🔗</div>
+                    <div class="ptho" style="background:linear-gradient(to bottom,transparent 50%,#fff9f0)"></div>
+                </div>
+                <div class="pbody">
+                    <div class="pjtags"><span class="pjt">SAP B1</span><span class="pjt">Sockets TCP</span><span
+                            class="pjt">REST</span><span class="pjt">.NET</span></div>
+                    <div class="pjn">Integración SAP Business One — Sincronización Bidireccional</div>
+                    <p class="pjd">Sistema robusto de integración entre aplicaciones propias y SAP B1: precios, stock y
+                        transacciones siempre sincronizados, con conexión a entidades externas vía REST y TCP.</p>
+                    <div class="pjdets">
+                        <div class="pjdet">Sincronización bidireccional en tiempo real de precios, stock y movimientos
+                            de inventario entre SAP B1 y sistema web.</div>
+                        <div class="pjdet">Conexión a entidades externas via REST y sockets TCP con reconexión
+                            automática, reintentos y logging estructurado.</div>
+                    </div>
+                    <div class="pjft">
+                        <div class="pjimp">
+                            <div>
+                                <div class="pjin">Bidireccional</div>
+                                <div class="pjil">Sync</div>
+                            </div>
+                            <div>
+                                <div class="pjin">Real-time</div>
+                                <div class="pjil">Updates</div>
+                            </div>
+                            <div>
+                                <div class="pjin">TCP+REST</div>
+                                <div class="pjil">Protocolos</div>
+                            </div>
+                        </div>
+                        <a href="#contacto" class="pjcta">Consultar →</a>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="tl-desc">
-          <ul>
-            <li>Migración de sistemas legados desde FoxPro a C# con Windows Forms, aplicando patrones Repository y Singleton.</li>
-            <li>Refactorización de código antiguo, eliminación de redundancias y mejora de rendimiento en módulos críticos.</li>
-            <li>Configuración y optimización de conexiones a SQL Server con stored procedures de alto rendimiento.</li>
-            <li>Aplicación de metodologías SCRUM en sprints, daily meetings y entregas continuas.</li>
-          </ul>
+    </section>
+
+    <!-- SERVICES -->
+    <section id="servicios" class="sec">
+        <div class="rev">
+            <div class="ey">Servicios</div>
+            <h2 class="st">¿En qué puedo <em>ayudarte?</em></h2>
+            <p class="sd">Soluciones a medida para empresas que necesitan tecnología de calidad, entregada a tiempo y
+                con soporte real.</p>
+            <div class="sln"></div>
         </div>
-      </div>
-    </div>
-  </div>
+        <div class="svgrid">
+            <div class="sv rev">
+                <div class="svnum">01</div>
+                <div class="svic">🌐</div>
+                <div class="svn">Desarrollo Web Full Stack</div>
+                <p class="svd">Sistemas web empresariales a medida con PHP, .NET Core y JavaScript. Desde módulos CRUD
+                    hasta plataformas complejas con múltiples roles, auditoría y lógica de negocio avanzada.</p>
+                <div class="svpls"><span class="svp">PHP POO</span><span class="svp">.NET Core</span><span
+                        class="svp">Bootstrap 5</span><span class="svp">JS/TS</span></div>
+            </div>
+            <div class="sv rev d1">
+                <div class="svnum">02</div>
+                <div class="svic">🔌</div>
+                <div class="svn">APIs RESTful & Backend</div>
+                <p class="svd">Web APIs escalables en .NET Core con Swagger, JWT, Postman y arquitectura MVC limpia.
+                    Integración con cualquier frontend o sistema externo.</p>
+                <div class="svpls"><span class="svp">.NET Core</span><span class="svp">Swagger</span><span
+                        class="svp">JWT</span><span class="svp">REST</span></div>
+            </div>
+            <div class="sv rev d2">
+                <div class="svnum">03</div>
+                <div class="svic">🏢</div>
+                <div class="svn">Integración SAP Business One</div>
+                <p class="svd">Conexión de sistemas propios con SAP B1 en tiempo real. Precios, inventario, clientes y
+                    transacciones siempre sincronizados con manejo robusto de errores.</p>
+                <div class="svpls"><span class="svp">SAP B1</span><span class="svp">Sockets TCP</span><span
+                        class="svp">REST</span></div>
+            </div>
+            <div class="sv rev">
+                <div class="svnum">04</div>
+                <div class="svic">🧾</div>
+                <div class="svn">Facturación Electrónica SUNAT</div>
+                <p class="svd">Implementación completa según normativa peruana vigente. Facturas, boletas, notas. XML
+                    UBL 2.1, envío a OSE, CDR automático y registro seguro.</p>
+                <div class="svpls"><span class="svp">SUNAT</span><span class="svp">UBL 2.1</span><span
+                        class="svp">C#</span></div>
+            </div>
+            <div class="sv rev d1">
+                <div class="svnum">05</div>
+                <div class="svic">📊</div>
+                <div class="svn">Dashboards Power BI</div>
+                <p class="svd">Reportes ejecutivos conectados a SAP, SQL Server y Excel. DAX avanzado, KPIs gerenciales,
+                    drill-down y actualización automática para decisiones ágiles.</p>
+                <div class="svpls"><span class="svp">Power BI</span><span class="svp">DAX</span><span
+                        class="svp">SAP</span><span class="svp">Excel</span></div>
+            </div>
+            <div class="sv rev d2">
+                <div class="svnum">06</div>
+                <div class="svic">🗄️</div>
+                <div class="svn">Bases de Datos & SQL</div>
+                <p class="svd">Diseño relacional, stored procedures y triggers en SQL Server y MySQL. Diagnóstico y
+                    optimización de consultas lentas con análisis de planes de ejecución.</p>
+                <div class="svpls"><span class="svp">SQL Server</span><span class="svp">MySQL</span><span
+                        class="svp">Procedures</span></div>
+            </div>
+            <div class="sv rev">
+                <div class="svnum">07</div>
+                <div class="svic">📱</div>
+                <div class="svn">Apps Móviles Flutter</div>
+                <p class="svd">Aplicaciones iOS y Android con Flutter y Firebase. Chat real con Firestore,
+                    geolocalización, FCM, autenticación multi-método y arquitectura Provider escalable.</p>
+                <div class="svpls"><span class="svp">Flutter</span><span class="svp">Firebase</span><span
+                        class="svp">FCM</span><span class="svp">Dart</span></div>
+            </div>
+        </div>
+    </section>
 
-  <div class="reveal" style="margin-top:4rem;">
-    <span class="section-label">// Formación académica</span>
-    <h3 class="section-title" style="font-size:1.5rem; margin-bottom:0.7rem;">Educación & <em>Certificaciones</em></h3>
-    <div class="section-line"></div>
-  </div>
-  <div class="edu-grid reveal">
-    <div class="edu-card">
-      <div class="edu-year">2018 — 2023</div>
-      <div class="edu-title">Bachiller en Ingeniería de Sistemas e Informática</div>
-      <div class="edu-inst">Universidad Privada Norbert Wiener</div>
-    </div>
-    <div class="edu-card">
-      <div class="edu-year">2017 — 2018</div>
-      <div class="edu-title">Técnico en Computación e Informática</div>
-      <div class="edu-inst">Instituto Norbert Wiener</div>
-    </div>
-    <div class="edu-card">
-      <div class="edu-year">Julio 2020</div>
-      <div class="edu-title">Ekoparty University Talks Perú 2020</div>
-      <div class="edu-inst">Ekoparty · Bsides Perú · UPC · CySecByWomen — 6 horas</div>
-    </div>
-    <div class="edu-card">
-      <div class="edu-year">Noviembre 2020</div>
-      <div class="edu-title">🥇 1er Puesto — Diseño y Prototipos de Entornos Virtuales</div>
-      <div class="edu-inst">Feria Tecnológica 2020 · Universidad Privada Norbert Wiener · EAP de Ingenierías</div>
-    </div>
-  </div>
-</section>
+    <!-- CONTACT -->
+    <section id="contacto" class="sec">
+        <div class="ctw">
+            <div class="rev">
+                <div class="ey">Contacto</div>
+                <h2 class="cbig">¿Tienes un proyecto <em>en mente?</em></h2>
+                <p class="csub">Cuéntame tu idea o problema. Respondo en menos de 24 horas. Trabajo con startups, pymes
+                    y corporaciones.</p>
+                <div class="ccs">
+                    <a href="mailto:Wilianlibra19@gmail.com" class="cc">
+                        <div class="cc-ic">✉️</div>
+                        <div>
+                            <div class="cc-lb">Email principal</div>
+                            <div class="cc-v">Wilianlibra19@gmail.com</div>
+                        </div>
+                    </a>
+                    <a href="mailto:Wilianlibra2024@gmail.com" class="cc">
+                        <div class="cc-ic">📬</div>
+                        <div>
+                            <div class="cc-lb">Email alternativo</div>
+                            <div class="cc-v">Wilianlibra2024@gmail.com</div>
+                        </div>
+                    </a>
+                    <a href="tel:+51982257569" class="cc">
+                        <div class="cc-ic">📞</div>
+                        <div>
+                            <div class="cc-lb">Teléfono / WhatsApp</div>
+                            <div class="cc-v">+51 982 257 569</div>
+                        </div>
+                    </a>
+                    <a href="#" class="cc">
+                        <div class="cc-ic">📍</div>
+                        <div>
+                            <div class="cc-lb">Ubicación</div>
+                            <div class="cc-v">Santa Anita, Lima — Perú</div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="rev d1">
+                <form class="cform" onsubmit="hf(event)">
+                    <div class="crow">
+                        <div class="cg"><label>Nombre</label><input type="text" placeholder="Tu nombre completo" />
+                        </div>
+                        <div class="cg"><label>Email</label><input type="email" placeholder="tu@email.com" /></div>
+                    </div>
+                    <div class="crow">
+                        <div class="cg"><label>Empresa</label><input type="text" placeholder="Tu empresa (opcional)" />
+                        </div>
+                        <div class="cg"><label>Presupuesto</label><select>
+                                <option value="">Selecciona un rango</option>
+                                <option>Menos de S/ 2,000</option>
+                                <option>S/ 2,000 – S/ 5,000</option>
+                                <option>S/ 5,000 – S/ 15,000</option>
+                                <option>Más de S/ 15,000</option>
+                                <option>A convenir</option>
+                            </select></div>
+                    </div>
+                    <div class="cg"><label>Servicio</label><select>
+                            <option value="">¿Qué necesitas?</option>
+                            <option>Desarrollo Web Full Stack</option>
+                            <option>API RESTful / Backend</option>
+                            <option>Integración SAP Business One</option>
+                            <option>Facturación Electrónica SUNAT</option>
+                            <option>Dashboard Power BI</option>
+                            <option>Optimización SQL / BD</option>
+                            <option>App Móvil Flutter</option>
+                            <option>Consultoría Tecnológica</option>
+                            <option>Otro</option>
+                        </select></div>
+                    <div class="cg"><label>Mensaje</label><textarea rows="5"
+                            placeholder="Cuéntame tu proyecto, problema, plazos y qué esperas lograr..."></textarea>
+                    </div>
+                    <button type="submit" class="csbtn" id="csb">Enviar mensaje →</button>
+                </form>
+            </div>
+        </div>
+    </section>
 
-<section id="proyectos">
-  <div class="reveal">
-    <h2 class="section-title">Lo que he <em>construido</em></h2>
-    <div class="section-line"></div>
-  </div>
-  <div class="projects-grid">
-    <div class="project-card reveal">
-      <div class="project-thumb t1">🏥</div>
-      <div class="project-body">
-        <div class="project-tags"><span class="ptag">PHP</span><span class="ptag">MySQL</span><span class="ptag">Bootstrap</span><span class="ptag">SAP B1</span></div>
-        <div class="project-name">Sistema de Gestión Web — Medical</div>
-        <p class="project-desc">Sistema web con control de acceso por roles, dashboards dinámicos, tablas maestras y trazabilidad multiusuario. Integrado con SAP Business One.</p>
-      </div>
-    </div>
-    <div class="project-card reveal">
-      <div class="project-thumb t2">📦</div>
-      <div class="project-body">
-        <div class="project-tags"><span class="ptag">.NET Core</span><span class="ptag">SQL Server</span><span class="ptag">REST API</span></div>
-        <div class="project-name">Control de Inventarios Multiusuario</div>
-        <p class="project-desc">Inventario completo con gestión de stock, historial de movimientos y alertas automáticas de reposición. APIs documentadas con Swagger.</p>
-      </div>
-    </div>
-    <div class="project-card reveal">
-      <div class="project-thumb t3">🧾</div>
-      <div class="project-body">
-        <div class="project-tags"><span class="ptag">C#</span><span class="ptag">SUNAT</span><span class="ptag">XML/JSON</span></div>
-        <div class="project-name">Facturación Electrónica SUNAT</div>
-        <p class="project-desc">Scripts adaptados a normativa peruana para emisión, validación y registro automático de comprobantes electrónicos en servidores seguros.</p>
-      </div>
-    </div>
-    <div class="project-card reveal">
-      <div class="project-thumb t4">📊</div>
-      <div class="project-body">
-        <div class="project-tags"><span class="ptag">Power BI</span><span class="ptag">SAP</span><span class="ptag">DAX</span></div>
-        <div class="project-name">Dashboard Ejecutivo Power BI</div>
-        <p class="project-desc">Reportes automatizados integrando SAP Business One, SQL Server y Excel. Visualizaciones gerenciales con DAX y relaciones complejas.</p>
-      </div>
-    </div>
-    <div class="project-card reveal">
-      <div class="project-thumb t1">🖥️</div>
-      <div class="project-body">
-        <div class="project-tags"><span class="ptag">C#</span><span class="ptag">WinForms</span><span class="ptag">SQL Server</span></div>
-        <div class="project-name">Migración FoxPro → C# WinForms</div>
-        <p class="project-desc">Modernización de sistema legacy a C# con Windows Forms. Patrones Repository y Singleton. Stored procedures optimizados y mejora de rendimiento.</p>
-      </div>
-    </div>
-    <div class="project-card reveal">
-      <div class="project-thumb t2">🔗</div>
-      <div class="project-body">
-        <div class="project-tags"><span class="ptag">Sockets</span><span class="ptag">REST</span><span class="ptag">SAP B1</span></div>
-        <div class="project-name">Integración SAP Business One</div>
-        <p class="project-desc">Integración bidireccional con SAP B1 para sincronización de precios y stock. Conexión a entidades externas vía REST y sockets TCP.</p>
-      </div>
-    </div>
-    <div class="project-card reveal">
-      <div class="project-thumb t3">💼</div>
-      <div class="project-body">
-        <div class="project-tags"><span class="ptag">Flutter</span><span class="ptag">Firebase</span><span class="ptag">Dart</span><span class="ptag">Provider</span></div>
-        <div class="project-name">LaboraYa — Plataforma de Trabajos Temporales</div>
-        <p class="project-desc">App móvil estilo TaskRabbit que conecta clientes con trabajadores temporales. Sistema completo con chat en tiempo real, geolocalización, calificaciones, notificaciones push y gestión de trabajos con múltiples estados.</p>
-      </div>
-    </div>
-    <div class="project-card reveal">
-      <div class="project-thumb t4">🏠</div>
-      <div class="project-body">
-        <div class="project-tags"><span class="ptag">Flutter</span><span class="ptag">Firebase</span><span class="ptag">Firestore</span><span class="ptag">Maps</span></div>
-        <div class="project-name">CuartoPE — Alquiler de Cuartos</div>
-        <p class="project-desc">Plataforma de alquiler de cuartos con interfaz estilo TikTok. Feed vertical con fotos, chat integrado, sistema de favoritos, notificaciones inteligentes, modo oscuro y soporte multiidioma (ES/EN/PT).</p>
-      </div>
-    </div>
-  </div>
-</section>
+    <footer>
+        <div class="fbrand">Andy<span>.</span>dev</div>
+        <p>© 2026 Andy Wilian Ramos Borda · Lima, Perú · <a
+                href="mailto:Wilianlibra19@gmail.com">Wilianlibra19@gmail.com</a></p>
+        <div class="fls"><a href="#sobre-mi">Sobre mí</a><a href="#experiencia">Experiencia</a><a
+                href="#proyectos">Proyectos</a><a href="#servicios">Servicios</a><a href="#contacto">Contacto</a></div>
+    </footer>
 
-<section id="servicios">
-  <div class="reveal">
-    <h2 class="section-title">¿En qué puedo <em>ayudarte?</em></h2>
-    <div class="section-line"></div>
-  </div>
-  <div class="services-grid">
-    <div class="service-card reveal">
-      <div class="service-icon">🌐</div>
-      <div class="service-name">Desarrollo Web Full Stack</div>
-      <p class="service-desc">Sistemas web a medida con PHP, .NET Core, JavaScript y Bootstrap. Desde módulos CRUD hasta plataformas con múltiples roles y lógica empresarial compleja.</p>
-    </div>
-    <div class="service-card reveal">
-      <div class="service-icon">🔌</div>
-      <div class="service-name">APIs RESTful & Backend</div>
-      <p class="service-desc">Diseño e implementación de Web APIs en .NET Core y PHP. Documentación con Swagger, pruebas con Postman y arquitectura MVC limpia.</p>
-    </div>
-    <div class="service-card reveal">
-      <div class="service-icon">🏢</div>
-      <div class="service-name">Integración SAP Business One</div>
-      <p class="service-desc">Conexión de sistemas propios con SAP B1. Sincronización de inventario, precios y transacciones. Consultas y actualizaciones en tiempo real.</p>
-    </div>
-    <div class="service-card reveal">
-      <div class="service-icon">🧾</div>
-      <div class="service-name">Facturación Electrónica SUNAT</div>
-      <p class="service-desc">Implementación completa según normativa SUNAT. Generación de XML/JSON, validación automática y registro en servidores seguros.</p>
-    </div>
-    <div class="service-card reveal">
-      <div class="service-icon">📊</div>
-      <div class="service-name">Reportes Power BI</div>
-      <p class="service-desc">Dashboards interactivos conectados a SQL Server, SAP y Excel. DAX, relaciones complejas y visualizaciones ejecutivas para toma de decisiones.</p>
-    </div>
-    <div class="service-card reveal">
-      <div class="service-icon">🗄️</div>
-      <div class="service-name">BD & Optimización SQL</div>
-      <p class="service-desc">Diseño relacional, normalización, stored procedures y triggers en SQL Server y MySQL. Optimización de consultas críticas y mejora de rendimiento.</p>
-    </div>
-    <div class="service-card reveal">
-      <div class="service-icon">📱</div>
-      <div class="service-name">Desarrollo de Apps Móviles</div>
-      <p class="service-desc">Aplicaciones móviles multiplataforma con Flutter y Firebase. Chat en tiempo real, geolocalización, notificaciones push, autenticación y arquitectura escalable.</p>
-    </div>
-  </div>
-</section>
+    <script>
+        // CURSOR
+        const cur = document.getElementById('cur'), cr = document.getElementById('cur-r');
+        let tx = 0, ty = 0;
+        document.addEventListener('mousemove', e => { cur.style.left = e.clientX + 'px'; cur.style.top = e.clientY + 'px'; tx = e.clientX; ty = e.clientY; });
+        (function at() { cr.style.left = tx + 'px'; cr.style.top = ty + 'px'; requestAnimationFrame(at); })();
 
-<section id="contacto">
-  <div class="contact-inner">
-    <div class="reveal">
-      <h2 class="section-title">¿Tienes un proyecto <em>en mente?</em></h2>
-      <div class="section-line" style="margin:0 auto 1.5rem;"></div>
-      <p class="contact-sub">Cuéntame de tu idea. Respondo en menos de 24 horas.</p>
+        // NAV
+        const nav = document.getElementById('nav');
+        window.addEventListener('scroll', () => {
+            nav.classList.toggle('sc', scrollY > 40);
+            let c = '';
+            document.querySelectorAll('section[id]').forEach(s => { if (scrollY >= s.offsetTop - 120) c = s.id });
+            document.querySelectorAll('.nl a').forEach(a => a.classList.toggle('ac', a.getAttribute('href') === '#' + c));
+        });
+
+        // HERO CANVAS
+        const hc = document.getElementById('hc'), hctx = hc.getContext('2d');
+        function rz() { hc.width = hc.offsetWidth; hc.height = hc.offsetHeight; }
+        rz(); window.addEventListener('resize', rz);
+        const pts = Array.from({ length: 55 }, () => ({ x: Math.random() * hc.width, y: Math.random() * hc.height, vx: (Math.random() - .5) * .4, vy: (Math.random() - .5) * .4, r: Math.random() * 1.5 + .4 }));
+        (function ah() {
+            hctx.clearRect(0, 0, hc.width, hc.height);
+            pts.forEach((p, i) => {
+                pts.slice(i + 1).forEach(q => {
+                    const d = Math.hypot(p.x - q.x, p.y - q.y);
+                    if (d < 130) { hctx.beginPath(); hctx.strokeStyle = `rgba(232,93,38,${.05 * (1 - d / 130)})`; hctx.lineWidth = .6; hctx.moveTo(p.x, p.y); hctx.lineTo(q.x, q.y); hctx.stroke(); }
+                });
+                hctx.beginPath(); hctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); hctx.fillStyle = 'rgba(232,93,38,0.2)'; hctx.fill();
+                p.x += p.vx; p.y += p.vy;
+                if (p.x < 0 || p.x > hc.width) p.vx *= -1; if (p.y < 0 || p.y > hc.height) p.vy *= -1;
+            });
+            requestAnimationFrame(ah);
+        })();
+
+        // 3D CUBE on project thumbs
+        document.querySelectorAll('.pthc').forEach(c => {
+            const ctx = c.getContext('2d'), rgb = c.dataset.color || '232,93,38';
+            let a = 0;
+            function rs() { c.width = c.offsetWidth; c.height = c.offsetHeight; }
+            rs(); new ResizeObserver(rs).observe(c);
+            const S = () => Math.min(c.width, c.height) * .2;
+            const faces = [[0, 1, 2, 3], [4, 5, 6, 7], [0, 1, 5, 4], [2, 3, 7, 6], [1, 2, 6, 5], [0, 3, 7, 4]];
+            const fc = ['rgba(' + rgb + ',.1)', 'rgba(' + rgb + ',.07)', 'rgba(' + rgb + ',.09)', 'rgba(' + rgb + ',.05)', 'rgba(' + rgb + ',.12)', 'rgba(' + rgb + ',.08)'];
+            (function draw() {
+                ctx.clearRect(0, 0, c.width, c.height);
+                a += .009;
+                const s = S(), cx = c.width / 2, cy = c.height / 2;
+                const verts = [[-s, -s, -s], [s, -s, -s], [s, s, -s], [-s, s, -s], [-s, -s, s], [s, -s, s], [s, s, s], [-s, s, s]];
+                const co = Math.cos(a), si = Math.sin(a), cox = Math.cos(a * .65), six = Math.sin(a * .65);
+                const rot = verts.map(([x, y, z]) => { let x2 = x * co - z * si, z2 = x * si + z * co, y2 = y * cox - z2 * six, z3 = y * six + z2 * cox; return [x2, y2, z3]; });
+                const prj = rot.map(([x, y, z]) => { const sc = 320 / (320 + z); return [cx + x * sc, cy + y * sc]; });
+                faces.forEach((f, fi) => {
+                    ctx.beginPath(); f.forEach((v, i) => i ? ctx.lineTo(...prj[v]) : ctx.moveTo(...prj[v]));
+                    ctx.closePath(); ctx.fillStyle = fc[fi]; ctx.fill();
+                    ctx.strokeStyle = 'rgba(' + rgb + ',.12)'; ctx.lineWidth = .8; ctx.stroke();
+                });
+                requestAnimationFrame(draw);
+            })();
+        });
+
+        // HERO CARD 3D tilt
+        document.querySelectorAll('.hscene').forEach(sc => {
+            const inn = sc.querySelector('.hsi');
+            sc.addEventListener('mousemove', e => {
+                const r = sc.getBoundingClientRect();
+                const x = ((e.clientX - r.left) / r.width - .5) * 18, y = ((e.clientY - r.top) / r.height - .5) * -12;
+                inn.style.animation = 'none'; inn.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
+            });
+            sc.addEventListener('mouseleave', () => { inn.style.animation = 'hf 6s ease-in-out infinite'; inn.style.transform = ''; });
+        });
+
+        // REVEAL
+        const ro = new IntersectionObserver(entries => {
+            entries.forEach((e, i) => { if (e.isIntersecting) { setTimeout(() => e.target.classList.add('show'), i * 75); ro.unobserve(e.target); } });
+        }, { threshold: .07 });
+        document.querySelectorAll('.rev').forEach(el => ro.observe(el));
+
+        // FORM
+        function hf(e) {
+            e.preventDefault();
+            const b = document.getElementById('csb');
+            b.textContent = '✓ Enviado. Me comunico pronto.'; b.classList.add('ok');
+            setTimeout(() => { b.textContent = 'Enviar mensaje →'; b.classList.remove('ok'); e.target.reset(); }, 4500);
+        }
+    </script>
+
+    <!-- AI ASSISTANT WIDGET -->
+    <style>
+        /* AI Assistant CSS */
+        .ai-widget {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 9999;
+            font-family: var(--font-b);
+        }
+        
+        .ai-bubble {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--ember), var(--gold));
+            box-shadow: 0 4px 20px rgba(0, 212, 255, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s;
+        }
+        
+        .ai-bubble:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 25px rgba(0, 212, 255, 0.6);
+        }
+        
+        .ai-icon {
+            font-size: 28px;
+            color: #fff;
+        }
+
+        .ai-chat-window {
+            position: absolute;
+            bottom: 80px;
+            right: 0;
+            width: 350px;
+            height: 450px;
+            background: rgba(10, 16, 24, 0.85);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            box-shadow: var(--shadow-deep);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(20px) scale(0.95);
+            pointer-events: none;
+            transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-origin: bottom right;
+        }
+        
+        .ai-chat-window.open {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            pointer-events: auto;
+        }
+
+        .ai-header {
+            padding: 15px 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .ai-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            color: var(--ink);
+        }
+
+        .ai-title-icon {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--teal);
+            box-shadow: 0 0 10px var(--teal);
+        }
+
+        .ai-close {
+            cursor: pointer;
+            color: var(--mid);
+            font-size: 20px;
+            transition: color 0.2s;
+        }
+        
+        .ai-close:hover {
+            color: var(--ember);
+        }
+
+        .ai-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        /* Scrollbar for chat */
+        .ai-messages::-webkit-scrollbar {
+            width: 6px;
+        }
+        .ai-messages::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .ai-messages::-webkit-scrollbar-thumb {
+            background: var(--soft);
+            border-radius: 10px;
+        }
+
+        .ai-msg {
+            max-width: 85%;
+            padding: 12px 16px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            line-height: 1.4;
+            animation: ru 0.3s ease-out forwards;
+        }
+
+        .ai-msg.bot {
+            align-self: flex-start;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--ink);
+            border-bottom-left-radius: 4px;
+            border: 1px solid var(--border2);
+        }
+
+        .ai-msg.user {
+            align-self: flex-end;
+            background: linear-gradient(135deg, var(--ember), var(--gold));
+            color: #fff;
+            border-bottom-right-radius: 4px;
+        }
+
+        .ai-input-area {
+            padding: 15px;
+            border-top: 1px solid var(--border);
+            background: rgba(0, 0, 0, 0.2);
+            display: flex;
+            gap: 10px;
+        }
+
+        .ai-input {
+            flex: 1;
+            background: var(--cream2);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 10px 15px;
+            color: var(--ink);
+            font-family: var(--font-b);
+            font-size: 0.85rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        
+        .ai-input:focus {
+            border-color: var(--ember);
+        }
+
+        .ai-send {
+            background: var(--ember);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: #000;
+            transition: transform 0.2s, background 0.2s;
+        }
+
+        .ai-send:hover {
+            background: var(--ember2);
+            transform: scale(1.05);
+        }
+
+        .ai-typing {
+            display: flex;
+            gap: 4px;
+            padding: 5px;
+        }
+        .ai-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--mid);
+            border-radius: 50%;
+            animation: blink 1.4s infinite both;
+        }
+        .ai-dot:nth-child(1) { animation-delay: 0.2s; }
+        .ai-dot:nth-child(2) { animation-delay: 0.4s; }
+        .ai-dot:nth-child(3) { animation-delay: 0.6s; }
+
+        @keyframes blink {
+            0%, 80%, 100% { opacity: 0.2; transform: scale(0.8); }
+            40% { opacity: 1; transform: scale(1.2); }
+        }
+
+        @media (max-width: 480px) {
+            .ai-chat-window {
+                width: calc(100vw - 40px);
+                right: -10px;
+            }
+        }
+    </style>
+
+    <div class="ai-widget">
+        <div class="ai-chat-window" id="aiChatWindow">
+            <div class="ai-header">
+                <div class="ai-title">
+                    <div class="ai-title-icon"></div>
+                    AndyBot IA
+                </div>
+                <div class="ai-close" id="aiClose">&times;</div>
+            </div>
+            <div class="ai-messages" id="aiMessages">
+                <div class="ai-msg bot">¡Hola! Soy el asistente virtual de Andy. ¿En qué te puedo ayudar hoy? ¿Quieres saber sobre su experiencia, proyectos o contactarlo?</div>
+            </div>
+            <div class="ai-input-area">
+                <input type="text" class="ai-input" id="aiInput" placeholder="Escribe tu mensaje..." autocomplete="off">
+                <button class="ai-send" id="aiSend">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                </button>
+            </div>
+        </div>
+        <div class="ai-bubble" id="aiBubble">
+            <span class="ai-icon">
+                <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="11" width="18" height="10" rx="2"></rect>
+                    <circle cx="12" cy="5" r="2"></circle>
+                    <path d="M12 7v4"></path>
+                    <line x1="8" y1="16" x2="8.01" y2="16"></line>
+                    <line x1="16" y1="16" x2="16.01" y2="16"></line>
+                </svg>
+            </span>
+        </div>
     </div>
-    <form class="contact-form reveal" onsubmit="handleSubmit(event)">
-      <div class="form-row">
-        <div class="form-group"><label>Nombre</label><input type="text" placeholder="Tu nombre completo" /></div>
-        <div class="form-group"><label>Email</label><input type="email" placeholder="tu@email.com" /></div>
-      </div>
-      <div class="form-group">
-        <label>Servicio</label>
-        <select>
-          <option value="">¿Qué necesitas?</option>
-          <option>Desarrollo Web Full Stack</option>
-          <option>API RESTful / Backend</option>
-          <option>Integración SAP Business One</option>
-          <option>Facturación Electrónica SUNAT</option>
-          <option>Reportes Power BI</option>
-          <option>Base de Datos & SQL</option>
-          <option>Desarrollo de Apps Móviles</option>
-          <option>Otro</option>
-        </select>
-      </div>
-      <div class="form-group"><label>Mensaje</label><textarea rows="5" placeholder="Cuéntame sobre tu proyecto, plazos y presupuesto..."></textarea></div>
-      <button type="submit" class="form-submit">Enviar mensaje →</button>
-    </form>
-    <div class="contact-direct reveal">
-      <a href="mailto:Wilianlibra19@gmail.com" class="direct-card">
-        <div class="direct-ico">✉️</div>
-        <div><div class="direct-lbl">Email principal</div><div class="direct-val">Wilianlibra19@gmail.com</div></div>
-      </a>
-      <a href="mailto:Wilianlibra2024@gmail.com" class="direct-card">
-        <div class="direct-ico">📬</div>
-        <div><div class="direct-lbl">Email alternativo</div><div class="direct-val">Wilianlibra2024@gmail.com</div></div>
-      </a>
-      <a href="tel:+51982257569" class="direct-card">
-        <div class="direct-ico">📞</div>
-        <div><div class="direct-lbl">Teléfono</div><div class="direct-val">+51 982 257 569</div></div>
-      </a>
-      <a href="#" class="direct-card">
-        <div class="direct-ico">📍</div>
-        <div><div class="direct-lbl">Ubicación</div><div class="direct-val">Santa Anita, Lima — Perú</div></div>
-      </a>
-    </div>
-  </div>
-</section>
 
-<footer>
-  <p>© 2026 <a href="#inicio">Andy Wilian Ramos Borda</a>. Hecho con 💙 en Lima, Perú.</p>
-  <p>Bachiller Ing. Sistemas · <a href="mailto:Wilianlibra19@gmail.com">Wilianlibra19@gmail.com</a></p>
-</footer>
+    <script>
+        // AI Assistant Logic
+        const aiBubble = document.getElementById('aiBubble');
+        const aiChatWindow = document.getElementById('aiChatWindow');
+        const aiClose = document.getElementById('aiClose');
+        const aiMessages = document.getElementById('aiMessages');
+        const aiInput = document.getElementById('aiInput');
+        const aiSend = document.getElementById('aiSend');
 
-<script>
-  const reveals = document.querySelectorAll('.reveal');
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach((entry, i) => {
-      if (entry.isIntersecting) {
-        setTimeout(() => entry.target.classList.add('visible'), i * 90);
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.08 });
-  reveals.forEach(el => observer.observe(el));
+        let isChatOpen = false;
 
-  const sections = document.querySelectorAll('section[id]');
-  const navLinks = document.querySelectorAll('.nav-links a');
-  window.addEventListener('scroll', () => {
-    let current = '';
-    sections.forEach(s => { if (window.scrollY >= s.offsetTop - 90) current = s.id; });
-    navLinks.forEach(a => { a.style.color = a.getAttribute('href') === '#' + current ? 'var(--accent)' : ''; });
-  });
+        aiBubble.addEventListener('click', () => {
+            isChatOpen = !isChatOpen;
+            if (isChatOpen) {
+                aiChatWindow.classList.add('open');
+                aiInput.focus();
+            } else {
+                aiChatWindow.classList.remove('open');
+            }
+        });
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    const btn = e.target.querySelector('.form-submit');
-    btn.textContent = '✓ Mensaje enviado correctamente';
-    btn.style.background = 'var(--accent3)';
-    setTimeout(() => { btn.textContent = 'Enviar mensaje →'; btn.style.background = ''; e.target.reset(); }, 3500);
-  }
-</script>
+        aiClose.addEventListener('click', () => {
+            isChatOpen = false;
+            aiChatWindow.classList.remove('open');
+        });
+
+        function addMessage(text, sender) {
+            const msgDiv = document.createElement('div');
+            msgDiv.className = `ai-msg ${sender}`;
+            msgDiv.textContent = text;
+            aiMessages.appendChild(msgDiv);
+            aiMessages.scrollTop = aiMessages.scrollHeight;
+        }
+
+        function showTyping() {
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'ai-msg bot ai-typing-indicator';
+            typingDiv.innerHTML = '<div class="ai-typing"><div class="ai-dot"></div><div class="ai-dot"></div><div class="ai-dot"></div></div>';
+            aiMessages.appendChild(typingDiv);
+            aiMessages.scrollTop = aiMessages.scrollHeight;
+            return typingDiv;
+        }
+
+        function getBotResponse(input) {
+            // Elimina acentos y pasa a minúsculas para analizar la pregunta
+            const lowerInput = input.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            
+            if (lowerInput.includes('hola') || lowerInput.includes('saludos') || lowerInput.includes('buenos dias') || lowerInput.includes('buenas tardes')) {
+                return "¡Hola! Soy AndyBot 🤖. Estoy aquí para ayudarte a conocer más sobre la experiencia y habilidades de Andy. ¿Qué te gustaría saber?";
+            } 
+            else if (lowerInput.includes('ultimo trabajo') || lowerInput.includes('trabajo actual') || lowerInput.includes('donde trabaja')) {
+                return "Actualmente, Andy es Desarrollador Full Stack en Inversiones Medical S.A.C (desde Marzo de 2025). Trabaja con PHP, .NET Core, SQL Server, SAP B1 y Power BI.";
+            }
+            else if ((lowerInput.includes('cuantos') || lowerInput.includes('cuanto')) && (lowerInput.includes('ano') || lowerInput.includes('tiempo'))) {
+                return "Andy cuenta con más de 2 años de experiencia profesional sólida en empresas tecnológicas de Lima como Inversiones Medical, Computer System Solution y Accenti S.A.C.";
+            }
+            else if (lowerInput.includes('experiencia') || lowerInput.includes('trabajo') || lowerInput.includes('donde ha trabajado') || lowerInput.includes('empresas') || lowerInput.includes('trayectoria')) {
+                return "Su experiencia abarca roles como Desarrollador Full Stack (Inversiones Medical), Backend & Integraciones (Computer System Solution) y Programador de Escritorio (Accenti S.A.C).";
+            } 
+            else if (lowerInput.includes('tecnolog') || lowerInput.includes('stack') || lowerInput.includes('habilidades') || lowerInput.includes('que sabe') || lowerInput.includes('herramientas') || lowerInput.includes('lenguajes') || lowerInput.includes('frameworks')) {
+                return "Es un desarrollador Full Stack muy completo. Domina C#, .NET Core, PHP, JavaScript, y Angular/React. Es experto en SQL Server, integración de APIs, y maneja SAP Business One y Power BI de forma avanzada.";
+            } 
+            else if (lowerInput.includes('estudio') || lowerInput.includes('educacion') || lowerInput.includes('universidad') || lowerInput.includes('instituto') || lowerInput.includes('donde estudio')) {
+                return "Andy es Bachiller en Ingeniería de Sistemas e Informática por la Universidad Privada Norbert Wiener, y también cuenta con el título de Técnico en Computación e Informática del Instituto Norbert Wiener.";
+            }
+            else if (lowerInput.includes('contacto') || lowerInput.includes('email') || lowerInput.includes('correo') || lowerInput.includes('llamar') || lowerInput.includes('celular') || lowerInput.includes('whatsapp') || lowerInput.includes('telefono')) {
+                return "¡Es muy fácil contactarlo! Escríbele a Wilianlibra19@gmail.com o envíale un mensaje a su WhatsApp: +51 982 257 569. Suele responder en el mismo día.";
+            } 
+            else if (lowerInput.includes('proyecto') || lowerInput.includes('portafolio') || lowerInput.includes('que ha hecho') || lowerInput.includes('ejemplos')) {
+                return "Ha trabajado en la migración de sistemas legados de FoxPro a C#, integración de facturación electrónica SUNAT (XML UBL 2.1), creación de APIs REST y automatización de reportes SAP en Power BI. Scrollea hacia 'Proyectos' para ver más detalles.";
+            } 
+            else if (lowerInput.includes('sap') || lowerInput.includes('business one') || lowerInput.includes('b1')) {
+                return "Andy tiene gran experiencia integrando SAP Business One. Ha creado módulos web que consultan precios y stock en tiempo real, además de integrarlo a dashboards gerenciales con Power BI y DAX.";
+            } 
+            else if (lowerInput.includes('precio') || lowerInput.includes('cobrar') || lowerInput.includes('tarifa') || lowerInput.includes('costo') || lowerInput.includes('cuanto cobra')) {
+                return "Las tarifas son 100% personalizadas según el requerimiento y el tamaño del proyecto. Te invito a usar el formulario de 'Contacto' (al final de la página) para enviarle los detalles de tu idea y recibir una cotización exacta sin compromiso.";
+            }
+            else if (lowerInput.includes('donde') && (lowerInput.includes('vive') || lowerInput.includes('ubicacion') || lowerInput.includes('pais') || lowerInput.includes('ciudad') || lowerInput.includes('reside'))) {
+                return "Andy se encuentra en Lima, Perú (distrito de Santa Anita), pero tiene total capacidad para desarrollar proyectos de forma remota para clientes de cualquier parte.";
+            }
+            else {
+                const responses = [
+                    "¡Es una excelente pregunta! Para detalles tan específicos, te sugiero enviarle un mensaje directo a Andy desde la sección de Contacto abajo.",
+                    "Analizando tu solicitud... Como asistente virtual programado en base al CV, te recomiendo enviar un WhatsApp (+51 982 257 569) a Andy para que te responda personalmente.",
+                    "¡Muy interesante! Andy es un desarrollador con mucha capacidad analítica y seguro puede ayudarte con eso. Mándale un correo a Wilianlibra19@gmail.com para conversar.",
+                    "No tengo la respuesta exacta a esa pregunta en mi base de datos actual 🤖, pero si subes a la sección 'Sobre mí' o 'Experiencia' seguro encontrarás pistas valiosas."
+                ];
+                return responses[Math.floor(Math.random() * responses.length)];
+            }
+        }
+
+        function handleSend() {
+            const text = aiInput.value.trim();
+            if (!text) return;
+
+            addMessage(text, 'user');
+            aiInput.value = '';
+
+            const typingIndicator = showTyping();
+
+            setTimeout(() => {
+                typingIndicator.remove();
+                const response = getBotResponse(text);
+                addMessage(response, 'bot');
+            }, 800 + Math.random() * 800); // .8 - 1.6s delay
+        }
+
+        aiSend.addEventListener('click', handleSend);
+        aiInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') handleSend();
+        });
+    </script>
 </body>
 </html>
