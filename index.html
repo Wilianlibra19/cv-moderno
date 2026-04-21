@@ -5,8 +5,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Andy Ramos · Full Stack Developer & ERP Integrator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,700&family=DM+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,700&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
         rel="stylesheet" />
     <style>
         *,
@@ -18,28 +20,30 @@
         }
 
         :root {
-            --cream: #080c10;
-            --cream2: #0d1117;
-            --warm: #0a1018;
-            --ink: #e2eaf4;
-            --ink2: #c8d8e8;
-            --mid: #7a9ab5;
-            --soft: #4a6880;
-            --ember: #00d4ff;
-            --ember2: #33ddff;
-            --teal: #00ffaa;
-            --teal2: #00dd88;
-            --gold: #0066ff;
-            --gold2: #0044cc;
-            --card: #0e1620;
-            --card2: #0a1018;
-            --border: rgba(255, 255, 255, 0.07);
+            --font-a: system-ui, -apple-system, sans-serif;
+            --font-b: 'Inter', sans-serif;
+            --font-c: 'JetBrains Mono', monospace;
+            --font-d: 'Inter', sans-serif;
+            --cream: #0B0F19;
+            --cream2: #111827;
+            --warm: #1F2937;
+            --ink: #F8FAFC;
+            --ink2: #E2E8F0;
+            --mid: #94A3B8;
+            --soft: #64748B;
+            --ember: #38BDF8;
+            --ember2: #818CF8;
+            --teal: #2DD4BF;
+            --teal2: #34D399;
+            --gold: #FBBF24;
+            --gold2: #F59E0B;
+            --card: #151C2C;
+            --card2: #1E293B;
+            --border: rgba(255, 255, 255, 0.08);
             --border2: rgba(255, 255, 255, 0.04);
-            --shadow: 0 2px 40px rgba(0, 0, 0, 0.4);
-            --shadow-deep: 0 20px 80px rgba(0, 0, 0, 0.6);
-            --font-d: 'Fraunces', serif;
-            --font-b: 'Plus Jakarta Sans', sans-serif;
-            --font-m: 'DM Mono', monospace;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            --shadow-deep: 0 12px 36px rgba(0, 0, 0, 0.6);
+            --gap: 2rem
         }
 
         html {
@@ -57,14 +61,15 @@
 
         #cur {
             position: fixed;
-            width: 10px;
-            height: 10px;
+            width: 14px;
+            height: 14px;
             background: var(--ember);
             border-radius: 50%;
             pointer-events: none;
             z-index: 9999;
             transform: translate(-50%, -50%);
-            transition: width .3s, height .3s
+            transition: width .2s, height .2s;
+            box-shadow: 0 0 10px var(--ember);
         }
 
         #cur-r {
@@ -95,8 +100,9 @@
             content: '';
             position: absolute;
             inset: 0;
-            background: rgba(8, 12, 16, .92);
+            background: rgba(0, 0, 0, .7);
             backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--border2);
             opacity: 0;
             transition: opacity .4s;
@@ -204,24 +210,26 @@
 
         .hbg1 {
             position: absolute;
-            top: -8%;
-            right: -4%;
-            width: 600px;
-            height: 600px;
+            top: -10%;
+            right: 0%;
+            width: 800px;
+            height: 800px;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(0, 212, 255, .07) 0%, rgba(0, 102, 255, .05) 40%, transparent 70%);
-            pointer-events: none
+            background: radial-gradient(circle, rgba(56, 189, 248, 0.08) 0%, transparent 60%);
+            pointer-events: none;
+            filter: blur(60px);
         }
 
         .hbg2 {
             position: absolute;
             bottom: -10%;
-            left: -5%;
-            width: 380px;
-            height: 380px;
+            left: 0%;
+            width: 600px;
+            height: 600px;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(0, 255, 170, .05), transparent 65%);
-            pointer-events: none
+            background: radial-gradient(circle, rgba(129, 140, 248, 0.08) 0%, transparent 60%);
+            pointer-events: none;
+            filter: blur(60px);
         }
 
         .hl {
@@ -271,11 +279,11 @@
         }
 
         h1.hh {
-            font-family: var(--font-d);
-            font-size: clamp(3rem, 6vw, 5.5rem);
-            font-weight: 900;
-            line-height: .95;
-            letter-spacing: -.03em;
+            font-family: var(--font-b);
+            font-size: clamp(3.5rem, 8vw, 7rem);
+            font-weight: 800;
+            line-height: 0.9;
+            letter-spacing: -.05em;
             animation: ru .8s ease .08s both
         }
 
@@ -286,7 +294,9 @@
 
         h1.hh .l2 {
             display: block;
-            color: var(--ink)
+            background: linear-gradient(135deg, var(--ember) 0%, var(--ember2) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         h1.hh .l3 {
@@ -757,11 +767,11 @@
         }
 
         .st {
-            font-family: var(--font-d);
-            font-size: clamp(2.2rem, 4.5vw, 3.6rem);
-            font-weight: 900;
-            letter-spacing: -.03em;
-            line-height: 1.05;
+            font-family: var(--font-b);
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            font-weight: 800;
+            letter-spacing: -.04em;
+            line-height: 1;
             color: var(--ink)
         }
 
@@ -1344,18 +1354,26 @@
         .pj {
             background: var(--card);
             border: 1px solid var(--border);
-            border-radius: 22px;
+            border-radius: 16px;
             overflow: hidden;
-            transition: all .38s;
+            transition: all .4s ease;
             position: relative;
             display: flex;
-            flex-direction: column
+            flex-direction: column;
         }
 
         .pj:hover {
             box-shadow: var(--shadow-deep);
-            transform: translateY(-8px);
-            border-color: rgba(232, 93, 38, .2)
+            transform: translateY(-8px) scale(1.01);
+            border-color: var(--ember);
+        }
+
+        .pthumb img {
+            transition: transform .6s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        
+        .pj:hover .pthumb img {
+            transform: scale(1.08);
         }
 
         .pj.pw {
@@ -2406,10 +2424,8 @@
         </div>
         <div class="pmosaic">
             <div class="pj pw rev">
-                <div class="pthumb" style="background:linear-gradient(135deg,#fdf4e8,#f5e8cc)">
-                    <canvas class="pthc" data-color="232,93,38"></canvas>
-                    <div class="pthi">🏥</div>
-                    <div class="ptho" style="background:linear-gradient(to bottom,transparent 50%,#fff9f0)"></div>
+                <div class="pthumb">
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=600&h=400" alt="Gestión Web" style="width: 100%; height: 100%; object-fit: cover; opacity: 0.85;">
                 </div>
                 <div class="pbody">
                     <div class="pjtags"><span class="pjt">PHP</span><span class="pjt">MySQL</span><span
@@ -2446,10 +2462,8 @@
                 </div>
             </div>
             <div class="pj pn rev d1">
-                <div class="pthumb" style="background:linear-gradient(135deg,#e8f4f0,#cce8e2)">
-                    <canvas class="pthc" data-color="26,122,110"></canvas>
-                    <div class="pthi">🧾</div>
-                    <div class="ptho" style="background:linear-gradient(to bottom,transparent 50%,#fff9f0)"></div>
+                <div class="pthumb">
+                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=600&h=400" alt="Facturación Electrónica" style="width: 100%; height: 100%; object-fit: cover; opacity: 0.85;">
                 </div>
                 <div class="pbody">
                     <div class="pjtags"><span class="pjt">C#</span><span class="pjt">SUNAT</span><span class="pjt">XML
@@ -2479,10 +2493,8 @@
                 </div>
             </div>
             <div class="pj ph2 rev">
-                <div class="pthumb" style="background:linear-gradient(135deg,#f0eaf8,#e2d4f0)">
-                    <canvas class="pthc" data-color="120,80,180"></canvas>
-                    <div class="pthi">📦</div>
-                    <div class="ptho" style="background:linear-gradient(to bottom,transparent 50%,#fff9f0)"></div>
+                <div class="pthumb">
+                    <img src="https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?auto=format&fit=crop&q=80&w=600&h=400" alt="Control de Inventarios" style="width: 100%; height: 100%; object-fit: cover; opacity: 0.85;">
                 </div>
                 <div class="pbody">
                     <div class="pjtags"><span class="pjt">.NET Core</span><span class="pjt">SQL Server</span><span
@@ -2512,10 +2524,8 @@
                 </div>
             </div>
             <div class="pj ph2 rev d1">
-                <div class="pthumb" style="background:linear-gradient(135deg,#fceee0,#f8ddc4)">
-                    <canvas class="pthc" data-color="201,146,42"></canvas>
-                    <div class="pthi">📊</div>
-                    <div class="ptho" style="background:linear-gradient(to bottom,transparent 50%,#fff9f0)"></div>
+                <div class="pthumb">
+                    <img src="https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?auto=format&fit=crop&q=80&w=600&h=400" alt="Dashboard Power BI" style="width: 100%; height: 100%; object-fit: cover; opacity: 0.85;">
                 </div>
                 <div class="pbody">
                     <div class="pjtags"><span class="pjt">Power BI</span><span class="pjt">SAP</span><span
@@ -2543,10 +2553,8 @@
                 </div>
             </div>
             <div class="pj pt rev">
-                <div class="pthumb" style="background:linear-gradient(135deg,#e8f0f8,#ccddf0)">
-                    <canvas class="pthc" data-color="38,100,200"></canvas>
-                    <div class="pthi">🖥️</div>
-                    <div class="ptho" style="background:linear-gradient(to bottom,transparent 50%,#fff9f0)"></div>
+                <div class="pthumb">
+                    <img src="https://images.unsplash.com/photo-1526628953301-3e589a6a8b74?auto=format&fit=crop&q=80&w=600&h=400" alt="Migración WinForms" style="width: 100%; height: 100%; object-fit: cover; opacity: 0.85;">
                 </div>
                 <div class="pbody">
                     <div class="pjtags"><span class="pjt">C#</span><span class="pjt">WinForms</span><span
@@ -2566,10 +2574,8 @@
                 </div>
             </div>
             <div class="pj pt rev d1">
-                <div class="pthumb" style="background:linear-gradient(135deg,#f0f8e8,#d4f0c4)">
-                    <canvas class="pthc" data-color="60,160,60"></canvas>
-                    <div class="pthi">💼</div>
-                    <div class="ptho" style="background:linear-gradient(to bottom,transparent 50%,#fff9f0)"></div>
+                <div class="pthumb">
+                    <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&q=80&w=600&h=400" alt="LaboraYa App" style="width: 100%; height: 100%; object-fit: cover; opacity: 0.85;">
                 </div>
                 <div class="pbody">
                     <div class="pjtags"><span class="pjt">Flutter</span><span class="pjt">Firebase</span><span
@@ -2589,10 +2595,8 @@
                 </div>
             </div>
             <div class="pj pt rev d2">
-                <div class="pthumb" style="background:linear-gradient(135deg,#f8e8f0,#f0c4d8)">
-                    <canvas class="pthc" data-color="180,60,120"></canvas>
-                    <div class="pthi">🏠</div>
-                    <div class="ptho" style="background:linear-gradient(to bottom,transparent 50%,#fff9f0)"></div>
+                <div class="pthumb">
+                    <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?auto=format&fit=crop&q=80&w=600&h=400" alt="CuartoPE App" style="width: 100%; height: 100%; object-fit: cover; opacity: 0.85;">
                 </div>
                 <div class="pbody">
                     <div class="pjtags"><span class="pjt">Flutter</span><span class="pjt">Firestore</span><span
@@ -2612,10 +2616,8 @@
                 </div>
             </div>
             <div class="pj pw rev d1" style="grid-column:span 12">
-                <div class="pthumb" style="background:linear-gradient(135deg,#e8f0f0,#c4e0dc);height:150px">
-                    <canvas class="pthc" data-color="26,122,110"></canvas>
-                    <div class="pthi">🔗</div>
-                    <div class="ptho" style="background:linear-gradient(to bottom,transparent 50%,#fff9f0)"></div>
+                <div class="pthumb" style="height:150px">
+                    <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&q=80&w=800&h=300" alt="SAP Integration" style="width: 100%; height: 100%; object-fit: cover; opacity: 0.85;">
                 </div>
                 <div class="pbody">
                     <div class="pjtags"><span class="pjt">SAP B1</span><span class="pjt">Sockets TCP</span><span
@@ -2913,28 +2915,35 @@
         }
         
         .ai-bubble {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--ember), var(--gold));
-            box-shadow: 0 4px 20px rgba(0, 212, 255, 0.4);
+            width: 100px;
+            height: 100px;
+            background: transparent;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         
         .ai-bubble:hover {
-            transform: scale(1.1);
-            box-shadow: 0 6px 25px rgba(0, 212, 255, 0.6);
+            transform: scale(1.15);
         }
         
-        .ai-icon {
-            font-size: 28px;
-            color: #fff;
+        @keyframes waveHand {
+            0%, 100% { transform: translateY(0); }
+            25% { transform: translateY(-8px); }
+            75% { transform: translateY(8px); }
         }
-
+        .anim-wave {
+            animation: waveHand 0.6s ease-in-out infinite;
+        }
+        #aiAvatarImg {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            transition: opacity 0.3s ease;
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.3));
+        }
         .ai-chat-window {
             position: absolute;
             bottom: 80px;
@@ -3087,6 +3096,38 @@
             transform: scale(1.05);
         }
 
+        .ai-mic {
+            background: transparent;
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--mid);
+            transition: all 0.2s;
+        }
+
+        .ai-mic:hover {
+            border-color: var(--ember);
+            color: var(--ember);
+        }
+
+        .ai-mic.recording {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+            border-color: #ef4444;
+            animation: pulse-mic 1.5s infinite;
+        }
+
+        @keyframes pulse-mic {
+            0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        }
+
         .ai-typing {
             display: flex;
             gap: 4px;
@@ -3129,6 +3170,9 @@
                 <div class="ai-msg bot">¡Hola! Soy el asistente virtual de Andy. ¿En qué te puedo ayudar hoy? ¿Quieres saber sobre su experiencia, proyectos o contactarlo?</div>
             </div>
             <div class="ai-input-area">
+                <button class="ai-mic" id="aiMic" title="Hablar">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>
+                </button>
                 <input type="text" class="ai-input" id="aiInput" placeholder="Escribe tu mensaje..." autocomplete="off">
                 <button class="ai-send" id="aiSend">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
@@ -3136,15 +3180,7 @@
             </div>
         </div>
         <div class="ai-bubble" id="aiBubble">
-            <span class="ai-icon">
-                <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="3" y="11" width="18" height="10" rx="2"></rect>
-                    <circle cx="12" cy="5" r="2"></circle>
-                    <path d="M12 7v4"></path>
-                    <line x1="8" y1="16" x2="8.01" y2="16"></line>
-                    <line x1="16" y1="16" x2="16.01" y2="16"></line>
-                </svg>
-            </span>
+            <img src="ia.png" id="aiAvatarImg" alt="AndyBot">
         </div>
     </div>
 
@@ -3158,21 +3194,70 @@
         const aiSend = document.getElementById('aiSend');
 
         let isChatOpen = false;
+        
+        const aiAvatarImg = document.getElementById('aiAvatarImg');
+        let sleepTimer;
+
+        function resetSleepTimer() {
+            clearTimeout(sleepTimer);
+            if (aiAvatarImg.src.includes('iaDurmiendo.png') && !aiAvatarImg.src.includes('iaSaludo')) {
+                aiAvatarImg.src = 'ia.png';
+            }
+            sleepTimer = setTimeout(() => {
+                if (!aiAvatarImg.classList.contains('anim-wave')) {
+                    aiAvatarImg.src = 'iaDurmiendo.png';
+                }
+            }, 60000); // 1 minuto
+        }
+
+        resetSleepTimer();
+
+        // Saludo inicial al cargar la página
+        aiAvatarImg.src = 'iaSaludo.png';
+        aiAvatarImg.classList.add('anim-wave');
+        setTimeout(() => {
+            if (!isChatOpen) {
+                aiAvatarImg.classList.remove('anim-wave');
+                aiAvatarImg.src = 'ia.png';
+            }
+        }, 1000);
 
         aiBubble.addEventListener('click', () => {
             isChatOpen = !isChatOpen;
             if (isChatOpen) {
                 aiChatWindow.classList.add('open');
                 aiInput.focus();
+                
+                // Saludo y animación
+                clearTimeout(sleepTimer);
+                aiAvatarImg.src = 'iaSaludo.png';
+                aiAvatarImg.classList.add('anim-wave');
+                
+                setTimeout(() => {
+                    if (isChatOpen) {
+                        aiAvatarImg.classList.remove('anim-wave');
+                        aiAvatarImg.src = 'ia.png';
+                        resetSleepTimer();
+                    }
+                }, 3000);
             } else {
                 aiChatWindow.classList.remove('open');
+                aiAvatarImg.classList.remove('anim-wave');
+                aiAvatarImg.src = 'ia.png';
+                resetSleepTimer();
             }
         });
 
         aiClose.addEventListener('click', () => {
             isChatOpen = false;
             aiChatWindow.classList.remove('open');
+            aiAvatarImg.classList.remove('anim-wave');
+            aiAvatarImg.src = 'ia.png';
+            resetSleepTimer();
         });
+
+        // Reiniciar contador si el usuario escribe
+        aiInput.addEventListener('input', resetSleepTimer);
 
         function addMessage(text, sender) {
             const msgDiv = document.createElement('div');
@@ -3252,13 +3337,89 @@
                 typingIndicator.remove();
                 const response = getBotResponse(text);
                 addMessage(response, 'bot');
-            }, 800 + Math.random() * 800); // .8 - 1.6s delay
+                speak(response); // Hablar la respuesta
+            }, 800 + Math.random() * 800);
         }
 
         aiSend.addEventListener('click', handleSend);
         aiInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') handleSend();
         });
+
+        // ===============================
+        // Lógica de Voz (Speech to Text & Text to Speech)
+        // ===============================
+        const aiMic = document.getElementById('aiMic');
+        
+        // Reconocimiento de Voz
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        let recognition = null;
+        if (SpeechRecognition) {
+            recognition = new SpeechRecognition();
+            recognition.lang = 'es-ES';
+            recognition.continuous = false;
+            recognition.interimResults = false;
+            
+            recognition.onstart = function() {
+                aiMic.classList.add('recording');
+                aiInput.placeholder = "Escuchando...";
+            };
+            
+            recognition.onresult = function(event) {
+                const transcript = event.results[0][0].transcript;
+                aiInput.value = transcript;
+                setTimeout(() => handleSend(), 300); // Enviar auto
+            };
+            
+            recognition.onerror = function() {
+                aiMic.classList.remove('recording');
+                aiInput.placeholder = "Escribe tu mensaje...";
+            };
+            
+            recognition.onend = function() {
+                aiMic.classList.remove('recording');
+                aiInput.placeholder = "Escribe tu mensaje...";
+            };
+        }
+
+        aiMic.addEventListener('click', () => {
+            if (recognition) {
+                if (aiMic.classList.contains('recording')) {
+                    recognition.stop();
+                } else {
+                    recognition.start();
+                }
+            } else {
+                alert("Tu navegador no soporta entrada de voz. Prueba Chrome o Edge.");
+            }
+        });
+
+        // Síntesis de Voz
+        function speak(text) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel(); // Parar cualquier audio previo
+                
+                const cleanText = text.replace(/✓|→|🤖/g, ''); // Limpiar emojis/símbolos
+                const utterance = new SpeechSynthesisUtterance(cleanText);
+                utterance.lang = 'es-ES';
+                utterance.rate = 1.0;
+                utterance.pitch = 1.1; // Tono más amigable
+                
+                utterance.onstart = () => {
+                    aiAvatarImg.src = 'iaSaludo.png';
+                    aiAvatarImg.classList.add('anim-wave');
+                };
+                
+                utterance.onend = () => {
+                    if (isChatOpen) {
+                        aiAvatarImg.classList.remove('anim-wave');
+                        aiAvatarImg.src = 'ia.png';
+                    }
+                };
+                
+                window.speechSynthesis.speak(utterance);
+            }
+        }
     </script>
 </body>
 </html>
